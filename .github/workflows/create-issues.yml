@@ -1,4 +1,4 @@
-name: Create Issues from Templates
+name: Create Additional Issues from Templates
 
 on:
   workflow_dispatch:
@@ -69,6 +69,9 @@ jobs:
             echo "✅ Dry run completed. No issues were created."
             echo "To create issues, run this workflow again with dry_run set to 'false'."
           else
-            echo "✅ Issues have been created from templates!"
-            echo "Check the Issues tab to see all new issues."
+            echo "✅ Additional issues have been created from templates!"
+            echo "Check the Issues tab to see all issues."
+            echo ""
+            echo "Note: Issues may already exist from previous runs."
+            echo "The script will skip creating duplicate issues."
           fi
