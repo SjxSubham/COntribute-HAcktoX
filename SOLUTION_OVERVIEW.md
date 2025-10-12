@@ -150,7 +150,7 @@ All components have been tested:
 
 Once the maintainer creates the issues, you can:
 
-1. Browse the [Issues tab](../../issues)
+1. Browse the Issues tab on GitHub
 2. Filter by `good first issue` for beginner-friendly tasks
 3. Comment on an issue to claim it
 4. Fork the repository
