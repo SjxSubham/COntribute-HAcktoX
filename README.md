@@ -39,6 +39,37 @@ npm run dev
 
 We welcome contributions from developers of all skill levels! Here are some ways you can contribute:
 
+### 📝 For Maintainers: Creating Issues
+
+This repository includes 20 pre-made issue templates. To create issues for contributors:
+
+**Option 1: Use the Script (Recommended)**
+```bash
+# Install GitHub CLI if not already installed
+# See: https://cli.github.com/
+
+# Authenticate
+gh auth login
+
+# Run the script to create all issues
+node scripts/create-issues.js
+```
+
+**Option 2: Use GitHub Actions**
+1. Go to the "Actions" tab in the repository
+2. Select "Create Issues from Templates" workflow
+3. Click "Run workflow"
+4. Choose whether to do a dry run first (recommended)
+5. Click "Run workflow"
+
+**Option 3: Manual Creation**
+1. Go to the Issues tab
+2. Click "New Issue"
+3. Select one of the 20 available templates
+4. Fill in and submit (repeat 20 times)
+
+See [scripts/README.md](scripts/README.md) for detailed instructions.
+
 ### Areas Open for Contribution
 
 1. **Header/Navigation** - Add new navigation items, improve styling, or add a mobile menu
