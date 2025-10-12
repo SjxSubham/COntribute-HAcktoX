@@ -114,9 +114,18 @@ function App() {
           <p className="text-gray-600 mb-4">Perfect for getting started</p>
           <div className="text-4xl font-bold text-indigo-600 mb-4">$0</div>
           <ul className="text-gray-600 mb-6 space-y-2">
-            <li>✔ 1 Project</li>
-            <li>✔ Community Support</li>
-            <li>✖ No Custom Domain</li>
+            <li>
+              <span aria-hidden="true">✔</span>
+              <span className="sr-only">Available:</span> 1 Project
+            </li>
+            <li>
+              <span aria-hidden="true">✔</span>
+              <span className="sr-only">Available:</span> Community Support
+            </li>
+            <li>
+              <span aria-hidden="true">✖</span>
+              <span className="sr-only">Not available:</span> No Custom Domain
+            </li>
           </ul>
           <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
             Get Started
