@@ -39,3 +39,23 @@
 .animate-blob {
   animation: blob 7s infinite;
 }
+
+@keyframes counter-pop {
+  0% {
+    transform: scale(1);
+    color: inherit;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #10b981; /* Green highlight at peak */
+    text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    color: inherit;
+  }
+}
+
+.visitor-pop {
+  animation: counter-pop 0.7s ease-out;
+}

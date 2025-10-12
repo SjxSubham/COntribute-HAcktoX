@@ -31,60 +31,94 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // Track visitor count using localStorage with animation
+  // Track visitor count with improved animation - only counts in production
   useEffect(() => {
     // Set initial base count (for a more impressive starting number)
     const baseCount = 1520
+    
+    // Determine if we're in production (deployed) or development mode
+    const isProduction = window.location.hostname !== 'localhost' && 
+                       !window.location.hostname.includes('127.0.0.1')
     
     // Get the current visitor count
     const storedCount = localStorage.getItem('visitorCount') || baseCount
     const count = parseInt(storedCount, 10)
     
+    // Enhanced animation function for counter
+    const animateCounter = (startValue, endValue) => {
+      let currentCount = startValue
+      let animationFrame
+      
+      const step = () => {
+        // Calculate a dynamic step size for smoother animation
+        // Slow down as we approach the target value
+        const distance = endValue - currentCount
+        const increment = Math.max(1, Math.ceil(distance / 12))
+        
+        // Increment the current count
+        currentCount = Math.min(endValue, currentCount + increment)
+        
+        // Update the state
+        setVisitorCount(currentCount)
+        
+        // Continue animation if we haven't reached the end value
+        if (currentCount < endValue) {
+          animationFrame = requestAnimationFrame(step)
+        }
+      }
+      
+      // Start animation
+      animationFrame = requestAnimationFrame(step)
+      
+      // Return cleanup function
+      return () => cancelAnimationFrame(animationFrame)
+    }
+    
     // Check if this user has visited before in this session
     const hasVisited = sessionStorage.getItem('hasVisited')
     
-    if (!hasVisited) {
-      // Increment the count for new visitors
+    if (isProduction && !hasVisited) {
+      // Increment the count for new visitors ONLY in production
       const newCount = count + 1
       localStorage.setItem('visitorCount', newCount)
       sessionStorage.setItem('hasVisited', 'true')
       
-      // Animate count up
-      let currentCount = 0
-      const interval = setInterval(() => {
-        currentCount += Math.ceil((newCount - currentCount) / 10)
-        setVisitorCount(currentCount)
-        
-        if (currentCount >= newCount) {
-          clearInterval(interval)
-          setVisitorCount(newCount)
-        }
-      }, 50)
+      // Use the enhanced animation
+      animateCounter(0, newCount)
     } else {
-      // Animate count up for returning visitors too
-      let currentCount = 0
-      const interval = setInterval(() => {
-        currentCount += Math.ceil((count - currentCount) / 10)
-        setVisitorCount(currentCount)
-        
-        if (currentCount >= count) {
-          clearInterval(interval)
-          setVisitorCount(count)
-        }
-      }, 50)
+      // In development or for returning visitors, just show the count with animation
+      animateCounter(0, count)
     }
     
     // Simulate occasional new visitors in the background (for demo effect)
-    const randomVisitor = setInterval(() => {
-      setVisitorCount(prev => {
-        const newValue = prev + 1
-        localStorage.setItem('visitorCount', newValue)
-        return newValue
-      })
-    }, 30000) // Add a visitor roughly every 30 seconds
+    // Only do this in production environment
+    let randomVisitorInterval
+    
+    if (isProduction) {
+      randomVisitorInterval = setInterval(() => {
+        setVisitorCount(prev => {
+          // Apply a subtle "pop" animation to the counter using CSS classes
+          const counterElement = document.getElementById('visitor-counter')
+          if (counterElement) {
+            counterElement.classList.add('visitor-pop')
+            // Remove the class after the animation completes
+            setTimeout(() => {
+              counterElement.classList.remove('visitor-pop')
+            }, 700) // Duration should match the CSS animation
+          }
+          
+          // Update the stored count
+          const newValue = prev + 1
+          localStorage.setItem('visitorCount', newValue)
+          return newValue
+        })
+      }, 30000) // Add a visitor roughly every 30 seconds
+    }
     
     return () => {
-      clearInterval(randomVisitor)
+      if (randomVisitorInterval) {
+        clearInterval(randomVisitorInterval)
+      }
     }
   }, [])
   
@@ -265,7 +299,7 @@ function App() {
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-xl blur-md"></div>
             <div className="relative bg-black/30 border border-white/10 rounded-xl py-8 px-4">
               <div className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400 flex justify-center items-baseline">
-                {visitorCount.toLocaleString()}
+                <span id="visitor-counter">{visitorCount.toLocaleString()}</span>
                 <span className="text-sm text-indigo-300 ml-2 font-normal">visitors</span>
               </div>
               <div className="absolute top-0 right-0 mt-2 mr-2 bg-gradient-to-r from-green-400 to-green-600 text-xs text-white px-2 py-1 rounded-full flex items-center">
