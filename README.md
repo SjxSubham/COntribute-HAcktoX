@@ -15,14 +15,14 @@ Welcome to the Hacktoberfest Contributor Site! This is a simple, functional webs
 
 ## 📖 Table of Contents
 
-- [Quick Start](#-quick-start)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Available Scripts](#️-available-scripts)
-- [Contributing](#-contributing)
-- [Deployment](#-deployment)
-- [License](#-license)
-- [Support](#-support)
+- [Quick Start](#quick-start)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Available Scripts](#available-scripts)
+- [Contributing](#contributing)
+- [Deployment](#deployment)
+- [License](#license)
+- [Support](#support)
 
 ## ⚡ Quick Start
 
