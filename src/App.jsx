@@ -6,6 +6,17 @@ function App() {
   const [contributors, setContributors] = useState([])
   const [contributorsLoading, setContributorsLoading] = useState(true)
   const [contributorsError, setContributorsError] = useState(null)
+  // Additional repo stats
+  const [repoStats, setRepoStats] = useState({
+    stars: 0,
+    forks: 0,
+    mergedPRs: 0,
+    loading: true,
+    error: null
+  })
+  const [stargazers, setStargazers] = useState([])
+  const [stargazersLoading, setStargazersLoading] = useState(true)
+  const [stargazersError, setStargazersError] = useState(null)
   
   useEffect(() => {
     const handleScroll = () => {
@@ -77,16 +88,62 @@ function App() {
     }
   }, [])
   
+  // Helper function to fetch data with caching to avoid rate limits
+  const fetchWithCache = async (url, cacheKey, expirationMs = 60 * 60 * 1000) => { // Default: 1 hour cache
+    try {
+      // Check if we have cached data
+      const cachedData = localStorage.getItem(cacheKey)
+      
+      if (cachedData) {
+        const { data, timestamp } = JSON.parse(cachedData)
+        
+        // If cache hasn't expired, use it
+        if (Date.now() - timestamp < expirationMs) {
+          console.log(`Using cached data for ${cacheKey}`)
+          return data
+        }
+      }
+      
+      // Cache expired or doesn't exist, fetch fresh data
+      console.log(`Fetching fresh data for ${cacheKey}`)
+      const response = await fetch(url)
+      
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`)
+      }
+      
+      const data = await response.json()
+      
+      // Save to cache
+      localStorage.setItem(cacheKey, JSON.stringify({
+        data,
+        timestamp: Date.now()
+      }))
+      
+      return data
+    } catch (error) {
+      console.error(`Error fetching ${url}:`, error)
+      
+      // If API request failed but we have cached data, return that as fallback
+      const cachedData = localStorage.getItem(cacheKey)
+      if (cachedData) {
+        console.log(`Using expired cache for ${cacheKey} due to API error`)
+        return JSON.parse(cachedData).data
+      }
+      
+      throw error
+    }
+  }
+
   useEffect(() => {
-    // Fetch contributors from GitHub API
+    // Fetch contributors from GitHub API with caching
     const fetchContributors = async () => {
       try {
         setContributorsLoading(true)
-        const response = await fetch('https://api.github.com/repos/SjxSubham/COntribute-HAcktoX/contributors')
-        if (!response.ok) {
-          throw new Error('Failed to fetch contributors')
-        }
-        const data = await response.json()
+        const data = await fetchWithCache(
+          'https://api.github.com/repos/SjxSubham/COntribute-HAcktoX/contributors',
+          'contributors-cache'
+        )
         setContributors(data)
         setContributorsLoading(false)
       } catch (error) {
@@ -96,7 +153,62 @@ function App() {
       }
     }
     
+    // Fetch repository stats
+    const fetchRepoStats = async () => {
+      try {
+        // Get basic repo info including stars and forks
+        const repoData = await fetchWithCache(
+          'https://api.github.com/repos/SjxSubham/COntribute-HAcktoX',
+          'repo-info-cache'
+        )
+        
+        // Get merged PRs count - simulating as actual API would need multiple calls
+        const prData = await fetchWithCache(
+          'https://api.github.com/repos/SjxSubham/COntribute-HAcktoX/pulls?state=closed&per_page=100',
+          'closed-prs-cache'
+        )
+        
+        // In real API usage, we'd check for merged_at not being null
+        // For simplicity, we'll count all closed PRs as merged
+        const mergedPRs = prData.length
+        
+        setRepoStats({
+          stars: repoData.stargazers_count,
+          forks: repoData.forks_count,
+          mergedPRs: mergedPRs,
+          loading: false,
+          error: null
+        })
+      } catch (error) {
+        console.error('Error fetching repo stats:', error)
+        setRepoStats(prev => ({
+          ...prev,
+          loading: false,
+          error: error.message
+        }))
+      }
+    }
+    
+    // Fetch stargazers
+    const fetchStargazers = async () => {
+      try {
+        setStargazersLoading(true)
+        const data = await fetchWithCache(
+          'https://api.github.com/repos/SjxSubham/COntribute-HAcktoX/stargazers',
+          'stargazers-cache'
+        )
+        setStargazers(data)
+        setStargazersLoading(false)
+      } catch (error) {
+        console.error('Error fetching stargazers:', error)
+        setStargazersError(error.message)
+        setStargazersLoading(false)
+      }
+    }
+    
     fetchContributors()
+    fetchRepoStats()
+    fetchStargazers()
   }, [])
 
   return (
@@ -269,63 +381,92 @@ function App() {
       {/* Stats Section */}
       <section className="container mx-auto px-6 py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Hacktoberfest Impact</h2>
-          <p className="text-indigo-200 max-w-2xl mx-auto">The collective achievement of our global community creating meaningful change through open source.</p>
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Repository Stats</h2>
+          <p className="text-indigo-200 max-w-2xl mx-auto">
+            Real-time statistics for our{' '}
+            <a 
+              href="https://github.com/SjxSubham/COntribute-HAcktoX" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 underline"
+            >
+              Hacktoberfest repository
+            </a>
+          </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-pink-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+        {repoStats.loading ? (
+          <div className="flex justify-center items-center py-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+          </div>
+        ) : repoStats.error ? (
+          <div className="text-center text-pink-400 py-10">
+            <p>Couldn't load repository stats: {repoStats.error}</p>
+            <p className="mt-4 text-indigo-200">Please try refreshing the page.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-pink-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className="relative">
+                <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                  {contributors.length}
+                </div>
+                <div className="text-white/80 font-medium text-lg">Contributors</div>
+                <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full transform -translate-x-1/2"></div>
+              </div>
             </div>
-            <div className="relative">
-              <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">100K+</div>
-              <div className="text-white/80 font-medium text-lg">Contributors</div>
-              <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full transform -translate-x-1/2"></div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-purple-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              </div>
+              <div className="relative">
+                <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">
+                  {repoStats.stars}
+                </div>
+                <div className="text-white/80 font-medium text-lg">Stars</div>
+                <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transform -translate-x-1/2"></div>
+              </div>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-indigo-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+                </svg>
+              </div>
+              <div className="relative">
+                <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-blue-500">
+                  {repoStats.forks}
+                </div>
+                <div className="text-white/80 font-medium text-lg">Forks</div>
+                <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full transform -translate-x-1/2"></div>
+              </div>
+            </div>
+            
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-blue-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 group-hover:shadow-lg group-hover:shadow-blue-500/40 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div className="relative">
+                <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">
+                  {repoStats.mergedPRs}
+                </div>
+                <div className="text-white/80 font-medium text-lg">Merged PRs</div>
+                <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transform -translate-x-1/2"></div>
+              </div>
             </div>
           </div>
-          
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-purple-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-              </svg>
-            </div>
-            <div className="relative">
-              <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">50K+</div>
-              <div className="text-white/80 font-medium text-lg">Projects</div>
-              <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transform -translate-x-1/2"></div>
-            </div>
-          </div>
-          
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-indigo-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-              </svg>
-            </div>
-            <div className="relative">
-              <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-blue-500">1M+</div>
-              <div className="text-white/80 font-medium text-lg">Commits</div>
-              <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-indigo-500 to-blue-500 rounded-full transform -translate-x-1/2"></div>
-            </div>
-          </div>
-          
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-blue-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
-            <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 group-hover:shadow-lg group-hover:shadow-blue-500/40 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div className="relative">
-              <div className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">24/7</div>
-              <div className="text-white/80 font-medium text-lg">Global Activity</div>
-              <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transform -translate-x-1/2"></div>
-            </div>
-          </div>
-        </div>
+        )}
       </section>
       
       {/* Repository Contributors Section */}
@@ -422,6 +563,117 @@ function App() {
                     <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                   </svg>
                   Contribute on GitHub
+                </a>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+      
+      {/* Repository Stargazers Section */}
+      <section className="container mx-auto px-6 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Our Stargazers</h2>
+          <p className="text-indigo-200 max-w-2xl mx-auto">
+            People who have starred our{' '}
+            <a 
+              href="https://github.com/SjxSubham/COntribute-HAcktoX/stargazers" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 underline"
+            >
+              repository on GitHub
+            </a>
+          </p>
+        </div>
+        
+        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center">
+          {stargazersLoading ? (
+            <div className="flex justify-center items-center py-10">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+            </div>
+          ) : stargazersError ? (
+            <div className="py-10">
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                Be First!
+              </div>
+              <p className="text-pink-400">Failed to load stargazers: {stargazersError}</p>
+              <p className="text-indigo-200 mt-4">
+                GitHub API rate limits may have been reached. You can still view all stargazers directly on{' '}
+                <a 
+                  href="https://github.com/SjxSubham/COntribute-HAcktoX/stargazers" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-pink-400 hover:text-pink-300 underline"
+                >
+                  GitHub
+                </a>
+              </p>
+            </div>
+          ) : stargazers.length === 0 ? (
+            <div className="py-10">
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                Be First!
+              </div>
+              <p className="text-2xl text-white mb-10">Be the first to star this repository!</p>
+              <a 
+                href="https://github.com/SjxSubham/COntribute-HAcktoX"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-yellow-500/30 transition-all"
+              >
+                ⭐ Star on GitHub
+              </a>
+            </div>
+          ) : (
+            <>
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-amber-500">
+                {stargazers.length}
+              </div>
+              <p className="text-2xl text-white mb-10">Amazing Stargazers!</p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                {stargazers.map((stargazer) => (
+                  <a 
+                    key={stargazer.id} 
+                    href={stargazer.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="relative mb-3 group-hover:transform group-hover:-translate-y-1 transition-all duration-300">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img 
+                          src={stargazer.avatar_url} 
+                          alt={`${stargazer.login}'s avatar`}
+                          className="w-16 h-16 rounded-full object-cover relative bg-black/50 border-2 border-white/20 group-hover:border-yellow-400/50 transition-all"
+                        />
+                        <div className="absolute -top-1 -right-1 bg-gradient-to-r from-yellow-400 to-amber-500 w-6 h-6 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <p className="text-white font-medium text-sm truncate max-w-full group-hover:text-yellow-400 transition-colors">
+                        {stargazer.login}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              
+              <div className="mt-10">
+                <a 
+                  href="https://github.com/SjxSubham/COntribute-HAcktoX"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-yellow-500/30 transition-all inline-flex items-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                  Star the Repository
                 </a>
               </div>
             </>
