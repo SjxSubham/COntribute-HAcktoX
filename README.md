@@ -39,6 +39,22 @@ npm run dev
 
 We welcome contributions from developers of all skill levels! Here are some ways you can contribute:
 
+### 📝 For Maintainers: Creating Issues
+
+This repository includes 20 pre-made issue templates. To create issues for contributors:
+
+**Quick Start:**
+```bash
+npm run create-issues
+```
+
+For detailed instructions, see the [Maintainer Guide](MAINTAINER_GUIDE.md).
+
+**Alternative Methods:**
+- Use the GitHub Actions workflow (Actions → "Create Issues from Templates")
+- Use the Node.js script: `node scripts/create-issues.js`
+- Create manually via the Issues tab (select from 20 templates)
+
 ### Areas Open for Contribution
 
 1. **Header/Navigation** - Add new navigation items, improve styling, or add a mobile menu
