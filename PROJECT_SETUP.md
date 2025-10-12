@@ -207,3 +207,34 @@ The site is ready to be deployed to:
 - Any static hosting service
 
 Simply run `npm run build` and deploy the `dist/` folder.
+
+### Deploying to Vercel
+
+This project is optimized for Vercel deployment with the included `vercel.json` configuration file.
+
+**Option 1: Deploy via Vercel CLI**
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+**Option 2: Deploy via Vercel Dashboard**
+1. Push your code to GitHub
+2. Visit [vercel.com](https://vercel.com)
+3. Click "New Project"
+4. Import your GitHub repository
+5. Vercel will automatically detect the Vite framework and deploy
+
+**Option 3: Deploy Button**
+Click the button below to deploy this project to Vercel:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SjxSubham/COntribute-HAcktoX)
+
+The `vercel.json` file ensures:
+- Correct build command (`npm run build`)
+- Proper output directory (`dist`)
+- SPA routing support (all routes redirect to index.html)
+- Framework detection (Vite)
