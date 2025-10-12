@@ -43,32 +43,17 @@ We welcome contributions from developers of all skill levels! Here are some ways
 
 This repository includes 20 pre-made issue templates. To create issues for contributors:
 
-**Option 1: Use the Script (Recommended)**
+**Quick Start:**
 ```bash
-# Install GitHub CLI if not already installed
-# See: https://cli.github.com/
-
-# Authenticate
-gh auth login
-
-# Run the script to create all issues
-node scripts/create-issues.js
+npm run create-issues
 ```
 
-**Option 2: Use GitHub Actions**
-1. Go to the "Actions" tab in the repository
-2. Select "Create Issues from Templates" workflow
-3. Click "Run workflow"
-4. Choose whether to do a dry run first (recommended)
-5. Click "Run workflow"
+For detailed instructions, see the [Maintainer Guide](MAINTAINER_GUIDE.md).
 
-**Option 3: Manual Creation**
-1. Go to the Issues tab
-2. Click "New Issue"
-3. Select one of the 20 available templates
-4. Fill in and submit (repeat 20 times)
-
-See [scripts/README.md](scripts/README.md) for detailed instructions.
+**Alternative Methods:**
+- Use the GitHub Actions workflow (Actions → "Create Issues from Templates")
+- Use the Node.js script: `node scripts/create-issues.js`
+- Create manually via the Issues tab (select from 20 templates)
 
 ### Areas Open for Contribution
 

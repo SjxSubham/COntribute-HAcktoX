@@ -102,7 +102,7 @@ function main() {
   // Check if gh CLI is installed
   try {
     execSync('gh --version', { stdio: 'pipe' });
-  } catch (error) {
+  } catch {
     console.error('❌ GitHub CLI (gh) is not installed or not in PATH.');
     console.error('Please install it from: https://cli.github.com/');
     console.error('After installation, run: gh auth login');
@@ -112,7 +112,7 @@ function main() {
   // Check if authenticated
   try {
     execSync('gh auth status', { stdio: 'pipe' });
-  } catch (error) {
+  } catch {
     console.error('❌ Not authenticated with GitHub CLI.');
     console.error('Please run: gh auth login');
     process.exit(1);
