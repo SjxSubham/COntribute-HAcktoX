@@ -46,7 +46,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fhacktoberfest.com"
+                href="https://www.facebook.com/hacktoberfest/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
