@@ -95,6 +95,34 @@ For detailed instructions, see the [Maintainer Guide](MAINTAINER_GUIDE.md).
 - Provide a clear description of your changes in the PR
 - Be respectful and constructive in discussions
 
+## 🚀 Deployment
+
+This project is optimized for deployment on Vercel with zero configuration needed.
+
+### Deploy to Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/SjxSubham/COntribute-HAcktoX)
+
+**Via Vercel CLI:**
+```bash
+npm i -g vercel
+vercel
+```
+
+**Via Vercel Dashboard:**
+1. Push your code to GitHub
+2. Visit [vercel.com](https://vercel.com) and sign in
+3. Click "New Project" and import your repository
+4. Vercel will auto-detect Vite and deploy with optimal settings
+
+The included `vercel.json` configuration ensures proper routing and build settings.
+
+### Other Deployment Options
+
+- **Netlify**: Drag and drop the `dist` folder after running `npm run build`
+- **GitHub Pages**: Use the `dist` folder with GitHub Actions
+- **Any Static Host**: Deploy the `dist` folder after building
+
 ## 📜 License
 
 This project is licensed under the Mozilla Public License Version 2.0 - see the [LICENSE](LICENSE) file for details.
