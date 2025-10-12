@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { track } from '@vercel/analytics'
 
 function App() {
@@ -31,6 +33,15 @@ function App() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+ 
+  //To add animations and scroll effects
+  useEffect(() => {
+  AOS.init({
+    duration: 1500, // animation duration (in ms)
+    once: true, // whether animation should happen only once
+    easing: "ease-in-out", // smooth motion
+  });
+  }, []);
   
   // Track visitor count with improved animation - using Vercel Analytics in production
   useEffect(() => {
@@ -55,7 +66,7 @@ function App() {
         // Calculate a dynamic step size for smoother animation
         // Slow down as we approach the target value
         const distance = endValue - currentCount
-        const increment = Math.max(1, Math.ceil(distance / 12))
+        const increment = Math.max(1, Math.ceil(distance / 50))
         
         // Increment the current count
         currentCount = Math.min(endValue, currentCount + increment)
@@ -293,7 +304,7 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="home" className="relative pt-32 pb-24 overflow-hidden">
+      <section id="home" className="relative pt-32 pb-24 overflow-hidden"  data-aos="fade-down">
         <div className="absolute inset-0 z-0 opacity-30">
           <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
           <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
@@ -303,7 +314,7 @@ function App() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center">
             <h2 className="text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Hacktoberfest 2025</h2>
-            <p className="text-2xl text-indigo-200 mb-10 max-w-3xl mx-auto">Join the global celebration of open source. Contribute, learn, and earn digital rewards in this month-long event.</p>
+            <p className="text-2xl text-indigo-200 mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="300">Join the global celebration of open source. Contribute, learn, and earn digital rewards in this month-long event.</p>
             <div className="flex justify-center space-x-4">
               <a 
                 href="https://hacktoberfest.com/participation/" 
@@ -328,7 +339,7 @@ function App() {
 
       {/* Visitor Counter Section */}
       <section className="container mx-auto px-6 py-24">
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-10 max-w-md mx-auto text-center shadow-xl hover:shadow-pink-500/20 transition-all duration-300">
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-10 max-w-md mx-auto text-center shadow-xl hover:shadow-pink-500/20 transition-all duration-300" data-aos="fade-up">
           <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -370,60 +381,60 @@ function App() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="container mx-auto px-6 py-24">
-        <h2 className="text-4xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Amazing Features</h2>
-        <p className="text-center text-indigo-200 mb-16 max-w-2xl mx-auto">Our platform is built with cutting-edge technologies to provide you with the best experience possible.</p>
+      <section id="features" className="container mx-auto px-6 py-24" data-aos="slide-up">
+        <h2 className="text-4xl font-bold text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500" data-aos="fade-down">Amazing Features</h2>
+        <p className="text-center text-indigo-200 mb-16 max-w-2xl mx-auto"  data-aos="fade-up" data-aos-delay="200">Our platform is built with cutting-edge technologies to provide you with the best experience possible.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-pink-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-pink-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300"  data-aos="zoom-in" data-aos-delay="100">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Fast Development</h3>
+            <h3 className="text-xl font-bold text-white mb-3"  data-aos="fade-left" data-aos-delay="200">Fast Development</h3>
             <p className="text-indigo-200">Built with Vite for lightning-fast development experience with instant hot module replacement</p>
           </div>
           
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-purple-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-purple-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300"  data-aos="zoom-in" data-aos-delay="200">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Modern Styling</h3>
+            <h3 className="text-xl font-bold text-white mb-3" data-aos="fade-left" data-aos-delay="300">Modern Styling</h3>
             <p className="text-indigo-200">Styled with Tailwind CSS for beautiful, responsive design that adapts to any device or screen size</p>
           </div>
           
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-indigo-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-indigo-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300" data-aos="zoom-in" data-aos-delay="300">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center mb-6 group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
               </svg>
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">React Powered</h3>
+            <h3 className="text-xl font-bold text-white mb-3" data-aos="fade-left" data-aos-delay="400">React Powered</h3>
             <p className="text-indigo-200">Built with React for interactive user interfaces with reusable components and efficient state management</p>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="container mx-auto px-6 py-24 relative">
+      <section id="about" className="container mx-auto px-6 py-24 relative" data-aos="fade-up">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-800/30 to-pink-800/30 rounded-3xl blur-3xl opacity-30 -z-10"></div>
         
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
+          <div className="order-2 md:order-1" data-aos="fade-right">
             <h2 className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">About Hacktoberfest</h2>
             
-            <p className="text-indigo-100 mb-6 text-lg">
+            <p className="text-indigo-100 mb-6 text-lg" data-aos="fade-up" data-aos-delay="200">
               Hacktoberfest is DigitalOcean's annual event that encourages people to contribute to open source throughout October. Much of modern tech infrastructure—including some of DigitalOcean's own products—relies on open-source projects built and maintained by passionate people who often don't have the staff or budgets to do much more than keep the project alive.
             </p>
             
-            <p className="text-indigo-100 mb-8 text-lg">
+            <p className="text-indigo-100 mb-8 text-lg" data-aos="fade-up" data-aos-delay="400">
               Hacktoberfest is all about giving back to those projects, sharpening skills, and celebrating all things open source, especially the people who make open source so special.
             </p>
             
-            <div className="flex space-x-4">
+            <div className="flex space-x-4" data-aos="zoom-in" data-aos-delay="600">
               <a href="https://hacktoberfest.com" target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
@@ -439,7 +450,7 @@ function App() {
             </div>
           </div>
           
-          <div className="relative order-1 md:order-2">
+          <div className="relative order-1 md:order-2" data-aos="zoom-in-left">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg blur opacity-75"></div>
             <div className="relative bg-black rounded-lg overflow-hidden border border-white/10">
               <div className="aspect-w-16 aspect-h-9 bg-gradient-to-br from-indigo-900 to-purple-900 p-6 flex items-center justify-center">
@@ -454,8 +465,8 @@ function App() {
       </section>
 
       {/* Stats Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="text-center mb-16">
+      <section className="container mx-auto px-6 py-24" data-aos="fade-up">
+        <div className="text-center mb-16" data-aos="fade-down">
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Repository Stats</h2>
           <p className="text-indigo-200 max-w-2xl mx-auto">
             Real-time statistics for our{' '}
@@ -481,7 +492,7 @@ function App() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-pink-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-pink-500/50 hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="flip-left" data-aos-delay="100">
               <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -496,7 +507,7 @@ function App() {
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-purple-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-purple-500/50 hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="flip-left" data-aos-delay="200">
               <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
@@ -511,7 +522,7 @@ function App() {
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-indigo-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-indigo-500/50 hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="flip-left" data-aos-delay="300">
               <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
@@ -526,7 +537,7 @@ function App() {
               </div>
             </div>
             
-            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-blue-500/50 hover:transform hover:-translate-y-2 transition-all duration-300">
+            <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-blue-500/50 hover:transform hover:-translate-y-2 transition-all duration-300" data-aos="flip-left" data-aos-delay="400">
               <div className="inline-flex mb-4 p-4 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 group-hover:shadow-lg group-hover:shadow-blue-500/40 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -545,8 +556,8 @@ function App() {
       </section>
       
       {/* Repository Contributors Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="text-center mb-16">
+      <section className="container mx-auto px-6 py-24" data-aos="fade-up">
+        <div className="text-center mb-16" data-aos="zoom-in">
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Our Contributors</h2>
           <p className="text-indigo-200 max-w-2xl mx-auto">
             Meet the amazing people who have contributed to our{' '}
@@ -561,7 +572,7 @@ function App() {
           </p>
         </div>
         
-        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center">
+        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center" data-aos="fade-up" data-aos-delay="300">
           {contributorsLoading ? (
             <div className="flex justify-center items-center py-10">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
@@ -606,6 +617,8 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group"
+                    data-aos="zoom-in" 
+                    data-aos-delay="100"
                   >
                     <div className="flex flex-col items-center">
                       <div className="relative mb-3 group-hover:transform group-hover:-translate-y-1 transition-all duration-300">
@@ -646,8 +659,8 @@ function App() {
       </section>
       
       {/* Repository Stargazers Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="text-center mb-16">
+      <section className="container mx-auto px-6 py-24" data-aos="fade-up">
+        <div className="text-center mb-16" data-aos="fade-down">
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Our Stargazers</h2>
           <p className="text-indigo-200 max-w-2xl mx-auto">
             People who have starred our{' '}
@@ -662,7 +675,7 @@ function App() {
           </p>
         </div>
         
-        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center">
+        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center" data-aos="zoom-in-up">
           {stargazersLoading ? (
             <div className="flex justify-center items-center py-10">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
@@ -715,6 +728,8 @@ function App() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group"
+                    data-aos="zoom-in" 
+                    data-aos-delay="100"
                   >
                     <div className="flex flex-col items-center">
                       <div className="relative mb-3 group-hover:transform group-hover:-translate-y-1 transition-all duration-300">
@@ -757,14 +772,14 @@ function App() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="text-center mb-16">
+      <section className="container mx-auto px-6 py-24" data-aos="fade-up">
+        <div className="text-center mb-16" data-aos="fade-down">
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Developer Stories</h2>
           <p className="text-indigo-200 max-w-2xl mx-auto">Hear from developers who participated in previous Hacktoberfest events.</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-pink-500/50 transition-all">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-pink-500/50 transition-all" data-aos="fade-up" data-aos-delay="100">
             <div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -784,7 +799,7 @@ function App() {
             </div>
           </div>
           
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-purple-500/50 transition-all">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-purple-500/50 transition-all" data-aos="fade-up" data-aos-delay="200">
             <div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
@@ -804,7 +819,7 @@ function App() {
             </div>
           </div>
           
-          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-indigo-500/50 transition-all">
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-indigo-500/50 transition-all" data-aos="fade-up" data-aos-delay="300">
             <div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
