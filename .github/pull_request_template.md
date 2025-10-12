@@ -1,13 +1,13 @@
-**Short description**
+### Short description
 <!-- Add short description -->
 
-## Related Issue
+### Related Issue
 <!-- Link to the issue this PR addresses. If there's no issue, explain why this change is needed -->
 <!-- Example: Closes #123 -->
 Closes #
 
 
-## Type of Change U have made just tick mark that
+### Type of Change U have made just tick mark that
 <!-- Mark the relevant option with an "x" -->
 - [ ]  Bug fix (non-breaking change which fixes an issue)
 - [ ]  New feature (non-breaking change which adds functionality)
@@ -18,23 +18,23 @@ Closes #
 - [ ]  Performance improvement
 - [ ]  Test update
 
-## Changes Made
+### Changes Made
 <!-- Describe the changes you made in detail -->
 - Added/Modified/Fixed...
 - 
 - 
 
-## Screenshots (if applicable)
+### Screenshots (if applicable)
 <!-- Add screenshots to help explain your changes -->
 
 
 
-## Testing
+### Testing
 <!-- Describe how you tested your changes -->
 - [ ] Tested locally with `npm run dev`
 - [ ] Build passes (`npm run build`)
 
-## Checklist
+### Checklist
 <!-- Mark completed items with an "x" -->
 - [ ] My code follows the project's style guidelines
 - [ ] I have performed a self-review of my own code
