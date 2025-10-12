@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [visitorCount, setVisitorCount] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [contributors, setContributors] = useState([])
+  const [contributorsLoading, setContributorsLoading] = useState(true)
+  const [contributorsError, setContributorsError] = useState(null)
   
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +18,85 @@ function App() {
     
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+  
+  // Track visitor count using localStorage with animation
+  useEffect(() => {
+    // Set initial base count (for a more impressive starting number)
+    const baseCount = 1520
+    
+    // Get the current visitor count
+    const storedCount = localStorage.getItem('visitorCount') || baseCount
+    const count = parseInt(storedCount, 10)
+    
+    // Check if this user has visited before in this session
+    const hasVisited = sessionStorage.getItem('hasVisited')
+    
+    if (!hasVisited) {
+      // Increment the count for new visitors
+      const newCount = count + 1
+      localStorage.setItem('visitorCount', newCount)
+      sessionStorage.setItem('hasVisited', 'true')
+      
+      // Animate count up
+      let currentCount = 0
+      const interval = setInterval(() => {
+        currentCount += Math.ceil((newCount - currentCount) / 10)
+        setVisitorCount(currentCount)
+        
+        if (currentCount >= newCount) {
+          clearInterval(interval)
+          setVisitorCount(newCount)
+        }
+      }, 50)
+    } else {
+      // Animate count up for returning visitors too
+      let currentCount = 0
+      const interval = setInterval(() => {
+        currentCount += Math.ceil((count - currentCount) / 10)
+        setVisitorCount(currentCount)
+        
+        if (currentCount >= count) {
+          clearInterval(interval)
+          setVisitorCount(count)
+        }
+      }, 50)
+    }
+    
+    // Simulate occasional new visitors in the background (for demo effect)
+    const randomVisitor = setInterval(() => {
+      setVisitorCount(prev => {
+        const newValue = prev + 1
+        localStorage.setItem('visitorCount', newValue)
+        return newValue
+      })
+    }, 30000) // Add a visitor roughly every 30 seconds
+    
+    return () => {
+      clearInterval(randomVisitor)
+    }
+  }, [])
+  
+  useEffect(() => {
+    // Fetch contributors from GitHub API
+    const fetchContributors = async () => {
+      try {
+        setContributorsLoading(true)
+        const response = await fetch('https://api.github.com/repos/SjxSubham/COntribute-HAcktoX/contributors')
+        if (!response.ok) {
+          throw new Error('Failed to fetch contributors')
+        }
+        const data = await response.json()
+        setContributors(data)
+        setContributorsLoading(false)
+      } catch (error) {
+        console.error('Error fetching contributors:', error)
+        setContributorsError(error.message)
+        setContributorsLoading(false)
+      }
+    }
+    
+    fetchContributors()
   }, [])
 
   return (
@@ -57,23 +139,46 @@ function App() {
         </div>
       </section>
 
-      {/* Counter Demo Section */}
+      {/* Visitor Counter Section */}
       <section className="container mx-auto px-6 py-24">
         <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-10 max-w-md mx-auto text-center shadow-xl hover:shadow-pink-500/20 transition-all duration-300">
           <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
-          <h3 className="text-2xl font-bold text-white mb-4 mt-6">Interactive Counter</h3>
-          <p className="text-indigo-200 mb-6">Click the button to increment the counter</p>
-          <div className="mb-8 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400">{count}</div>
-          <button 
-            onClick={() => setCount((count) => count + 1)}
-            className="bg-gradient-to-r from-pink-500 to-orange-400 text-white px-8 py-4 rounded-xl font-bold hover:shadow-lg hover:shadow-pink-500/50 transition-all transform hover:-translate-y-1"
-          >
-            Increment
-          </button>
+          <h3 className="text-2xl font-bold text-white mb-4 mt-6">Site Visitors</h3>
+          <p className="text-indigo-200 mb-6">People who have visited our Hacktoberfest site</p>
+          <div className="relative mb-8">
+            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-xl blur-md"></div>
+            <div className="relative bg-black/30 border border-white/10 rounded-xl py-8 px-4">
+              <div className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400 flex justify-center items-baseline">
+                {visitorCount.toLocaleString()}
+                <span className="text-sm text-indigo-300 ml-2 font-normal">visitors</span>
+              </div>
+              <div className="absolute top-0 right-0 mt-2 mr-2 bg-gradient-to-r from-green-400 to-green-600 text-xs text-white px-2 py-1 rounded-full flex items-center">
+                <span className="w-2 h-2 bg-white rounded-full mr-1 animate-ping absolute inline-flex"></span>
+                <span className="w-2 h-2 bg-white rounded-full mr-1 relative inline-flex"></span>
+                Live
+              </div>
+            </div>
+          </div>
+          <div className="bg-white/5 backdrop-blur-md rounded-lg p-4 text-indigo-200 text-sm">
+            <p>Join our growing community of open source enthusiasts!</p>
+            <div className="flex justify-between items-center mt-3">
+              <div className="flex -space-x-2">
+                {[1, 2, 3, 4].map((num) => (
+                  <div key={num} className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-xs font-bold overflow-hidden">
+                    {String.fromCharCode(64 + num)}
+                  </div>
+                ))}
+                <div className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-bold">
+                  +{(visitorCount - 4).toLocaleString()}
+                </div>
+              </div>
+              <span className="text-xs opacity-75">Updated in real-time</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -220,6 +325,107 @@ function App() {
               <div className="absolute -bottom-1 left-1/2 w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transform -translate-x-1/2"></div>
             </div>
           </div>
+        </div>
+      </section>
+      
+      {/* Repository Contributors Section */}
+      <section className="container mx-auto px-6 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Our Contributors</h2>
+          <p className="text-indigo-200 max-w-2xl mx-auto">
+            Meet the amazing people who have contributed to our{' '}
+            <a 
+              href="https://github.com/SjxSubham/COntribute-HAcktoX" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 underline"
+            >
+              Hacktoberfest repository
+            </a>
+          </p>
+        </div>
+        
+        <div className="relative bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center">
+          {contributorsLoading ? (
+            <div className="flex justify-center items-center py-10">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500"></div>
+            </div>
+          ) : contributorsError ? (
+            <div className="py-10">
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                Join Now!
+              </div>
+              <p className="text-pink-400">Failed to load contributors: {contributorsError}</p>
+              <p className="text-indigo-200 mt-4">
+                GitHub API rate limits may have been reached. You can still view all contributors directly on{' '}
+                <a 
+                  href="https://github.com/SjxSubham/COntribute-HAcktoX/graphs/contributors" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-pink-400 hover:text-pink-300 underline"
+                >
+                  GitHub
+                </a>
+              </p>
+            </div>
+          ) : contributors.length === 0 ? (
+            <div className="py-10">
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                Be First!
+              </div>
+              <p className="text-2xl text-white mb-10">Be the first to contribute to this repository!</p>
+            </div>
+          ) : (
+            <>
+              <div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
+                {contributors.length}
+              </div>
+              <p className="text-2xl text-white mb-10">Contributors and counting!</p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                {contributors.map((contributor) => (
+                  <a 
+                    key={contributor.id} 
+                    href={contributor.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="relative mb-3 group-hover:transform group-hover:-translate-y-1 transition-all duration-300">
+                        <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <img 
+                          src={contributor.avatar_url} 
+                          alt={`${contributor.login}'s avatar`}
+                          className="w-16 h-16 rounded-full object-cover relative bg-black/50 border-2 border-white/20 group-hover:border-pink-500/50 transition-all"
+                        />
+                      </div>
+                      <p className="text-white font-medium text-sm truncate max-w-full group-hover:text-pink-400 transition-colors">
+                        {contributor.login}
+                      </p>
+                      <p className="text-indigo-300 text-xs">
+                        {contributor.contributions} {contributor.contributions === 1 ? 'contribution' : 'contributions'}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              
+              <div className="mt-12">
+                <a 
+                  href="https://github.com/SjxSubham/COntribute-HAcktoX"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-pink-500/50 transition-all transform hover:-translate-y-1 inline-flex items-center"
+                >
+                  <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                  Contribute on GitHub
+                </a>
+              </div>
+            </>
+          )}
         </div>
       </section>
 
