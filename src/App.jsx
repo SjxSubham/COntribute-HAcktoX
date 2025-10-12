@@ -165,19 +165,19 @@ function App() {
           </div>
           <div className="bg-white/5 backdrop-blur-md rounded-lg p-4 text-indigo-200 text-sm">
             <p>Join our growing community of open source enthusiasts!</p>
-            <div className="flex justify-between items-center mt-3">
+            {/* <div className="flex justify-between items-center mt-3">
               <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((num) => (
+                {/* {[1, 2, 3, 4].map((num) => (
                   <div key={num} className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-xs font-bold overflow-hidden">
                     {String.fromCharCode(64 + num)}
                   </div>
-                ))}
+                ))} 
                 <div className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-bold">
                   +{(visitorCount - 4).toLocaleString()}
                 </div>
               </div>
               <span className="text-xs opacity-75">Updated in real-time</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
