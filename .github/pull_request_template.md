@@ -5,6 +5,7 @@
 
 ## Related Issue
 <!-- Link to the issue this PR addresses. If there's no issue, explain why this change is needed -->
+<!-- Example: Closes #123 -->
 Closes #
 
 
@@ -21,7 +22,7 @@ Closes #
 
 ## Changes Made
 <!-- Describe the changes you made in detail -->
-- 
+- Added/Modified/Fixed...
 - 
 - 
 
