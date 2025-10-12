@@ -46,12 +46,12 @@ function App() {
             <h2 className="text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Hacktoberfest 2025</h2>
             <p className="text-2xl text-indigo-200 mb-10 max-w-3xl mx-auto">Join the global celebration of open source. Contribute, learn, and earn digital rewards in this month-long event.</p>
             <div className="flex justify-center space-x-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-pink-500/50 transition-all transform hover:-translate-y-1">
+              <a href="https://hacktoberfest.com/participation/" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-pink-500/50 transition-all transform hover:-translate-y-1">
                 Get Started
-              </button>
-              <button className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">
+              </a>
+              <a href="#about" className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">
                 Learn More
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -293,9 +293,9 @@ function App() {
         </div>
         
         <div className="flex justify-center mt-10">
-          <button className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all">
+          <a href="https://hacktoberfest.com/community/" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all">
             Share Your Story
-          </button>
+          </a>
         </div>
       </section>
 
@@ -319,7 +319,7 @@ function App() {
                 </svg>
                 Find Projects
               </a>
-              <a href="#" className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">
+              <a href="https://hacktoberfest.com/participation/#beginners" target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 transition-all">
                 Learn How to Contribute
               </a>
             </div>
@@ -335,17 +335,17 @@ function App() {
               <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400">Hacktoberfest</h3>
               <p className="text-indigo-200 mb-4">A month-long celebration of open source software run by DigitalOcean.</p>
               <div className="flex space-x-4">
-                <a href="#" className="text-white hover:text-pink-400 transition-colors">
+                <a href="https://www.facebook.com/hacktoberfest/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-pink-400 transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
                   </svg>
                 </a>
-                <a href="#" className="text-white hover:text-pink-400 transition-colors">
+                <a href="https://twitter.com/hacktoberfest" target="_blank" rel="noopener noreferrer" className="text-white hover:text-pink-400 transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                   </svg>
                 </a>
-                <a href="#" className="text-white hover:text-pink-400 transition-colors">
+                <a href="https://github.com/topics/hacktoberfest" target="_blank" rel="noopener noreferrer" className="text-white hover:text-pink-400 transition-colors">
                   <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                   </svg>
@@ -356,30 +356,30 @@ function App() {
             <div>
               <h4 className="text-lg font-semibold mb-4 text-white">Resources</h4>
               <ul className="space-y-2 text-indigo-200">
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Getting Started</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">FAQs</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Community</a></li>
+                <li><a href="https://hacktoberfest.com/participation/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Getting Started</a></li>
+                <li><a href="https://hacktoberfest.com/resources/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Documentation</a></li>
+                <li><a href="https://hacktoberfest.com/faq/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">FAQs</a></li>
+                <li><a href="https://hacktoberfest.com/community/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Community</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="text-lg font-semibold mb-4 text-white">Participate</h4>
               <ul className="space-y-2 text-indigo-200">
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Find Projects</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Register Event</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Event Rules</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Submit PR</a></li>
+                <li><a href="https://github.com/topics/hacktoberfest" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Find Projects</a></li>
+                <li><a href="https://hacktoberfest.com/profile/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Register Event</a></li>
+                <li><a href="https://hacktoberfest.com/participation/#rules" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Event Rules</a></li>
+                <li><a href="https://hacktoberfest.com/participation/#pr-mr-details" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Submit PR</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="text-lg font-semibold mb-4 text-white">Contact</h4>
               <ul className="space-y-2 text-indigo-200">
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Support</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Sponsors</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Partners</a></li>
-                <li><a href="#" className="hover:text-pink-400 transition-colors">Press Kit</a></li>
+                <li><a href="https://hacktoberfest.com/contact/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Support</a></li>
+                <li><a href="https://hacktoberfest.com/about/#sponsors" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Sponsors</a></li>
+                <li><a href="https://hacktoberfest.com/about/#partners" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Partners</a></li>
+                <li><a href="https://hacktoberfest.com/brand-guidelines/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Press Kit</a></li>
               </ul>
             </div>
           </div>
@@ -389,9 +389,9 @@ function App() {
               <p>© 2025 Hacktoberfest Contribution Site. Built with ❤️ for open source.</p>
             </div>
             <div className="flex space-x-6 text-sm text-indigo-300">
-              <a href="#" className="hover:text-pink-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-pink-400 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-pink-400 transition-colors">Code of Conduct</a>
+              <a href="https://hacktoberfest.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Privacy Policy</a>
+              <a href="https://hacktoberfest.com/terms-of-service/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Terms of Service</a>
+              <a href="https://hacktoberfest.com/participation/#values" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Code of Conduct</a>
             </div>
           </div>
         </div>
