@@ -124,7 +124,11 @@ function App() {
         </div>
         {/* Pro Plan */}
         <div className="bg-indigo-50 border-2 border-indigo-600 rounded-xl shadow-lg p-8 text-center">
-          <div className="inline-block bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2">
+          <div
+            className="inline-block bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2"
+            aria-label="Most Popular plan badge"
+            role="status"
+          >
             Most Popular
           </div>
           <h3 className="text-2xl font-bold mb-2 text-indigo-600">Pro</h3>
