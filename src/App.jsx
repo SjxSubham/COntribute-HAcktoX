@@ -1008,6 +1008,7 @@ function App() {
               <a href="https://hacktoberfest.com/privacy-policy/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Privacy Policy</a>
               <a href="https://hacktoberfest.com/terms-of-service/" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Terms of Service</a>
               <a href="https://hacktoberfest.com/participation/#values" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Code of Conduct</a>
+                            <a href="https://feed-x-widget.vercel.app/?projectId=31&projectName=hacktoberfest" target="_blank" rel="noopener noreferrer" className="hover:text-pink-400 transition-colors">Feedback</a>
             </div>
           </div>
         </div>
