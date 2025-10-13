@@ -491,6 +491,74 @@ function App() {
         </div>
       </section>
 
+      {/* Teams Section */}
+      <section id="teams" className="container mx-auto px-6 py-24 relative">
+        <h1 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">Our Team</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+          {[
+            {
+              name: "Alex",
+              role: "Team Lead",
+              img: "/image1.jpg",
+              desc: "Tech Lead with a strong focus on building scalable, high-performance systems and leading teams to deliver clean, reliable code.",
+              github:"https://github.com/",
+              twitter:"https://x.com/",
+              linkedin:"https://linkedin.com/in/",
+            },
+            {
+              name: "Naina",
+              role: "Frontend Developer",
+              img: "/image2.jpg",
+              desc: "Frontend specialist focused on creating intuitive, responsive, and visually engaging interfaces that deliver seamless user experiences.",
+              github:"https://github.com/",
+              twitter:"https://x.com/",
+              linkedin:"linkedin.com/in/",
+            },
+            {
+              name: "John",
+              role: "Backend Engineer",
+              img: "/image3.jpg",
+              desc: "Backend developer experienced in crafting efficient APIs and scalable architectures to power high-performing web applications.",
+              github:"https://github.com/",
+              twitter:"https://x.com/",
+              linkedin:"linkedin.com/in/",
+            },
+            {
+              name: "Lina",
+              role: "UI/UX Designer",
+              img: "/image4.jpg",
+              desc: "Creative designer passionate about translating ideas into clean, modern interfaces that align aesthetics with usability.",
+              github:"https://github.com/",
+              twitter:"https://x.com/",
+              linkedin:"linkedin.com/in/",
+            },
+          ].map((member, i) => (
+            <div key={i} className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-center group hover:border-pink-500/50 hover:-translate-y-2 transition-all duration-300">
+              <div className="inline-flex mb-4 w-24 h-24 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 overflow-hidden group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all">
+                <img src={member.img} alt={member.name} className="w-full h-full object-cover"/>
+              </div>
+              <div className="relative">
+                <p className="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-500">{member.name}</p>
+                <p className="text-xl font-semibold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-indigo-500">{member.role}</p>
+                <p className="text-white/80 font-medium text-base">{member.desc}</p>
+              </div>
+              <div className="mt-6 flex justify-center space-x-10 bg-black rounded-full p-3">
+                <a href={member.github} target="_blank" rel="noopener noreferrer">
+                  <img src='https://cdn-icons-png.flaticon.com/128/270/270798.png' className='w-10 h-10'></img>
+                </a>
+                <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                  <img src='https://cdn-icons-png.flaticon.com/128/145/145807.png' className='w-10 h-10'></img>
+                </a>
+                <a href={member.twitter} target="_blank" rel="noopener noreferrer">
+                  <img src='https://cdn-icons-png.flaticon.com/128/3670/3670151.png' className='w-10 h-10'></img>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      
       {/* Stats Section */}
       <section className="container mx-auto px-6 py-24" data-aos="fade-up">
         <div className="text-center mb-16" data-aos="fade-down">
