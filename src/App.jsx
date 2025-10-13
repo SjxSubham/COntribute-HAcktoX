@@ -3,6 +3,14 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
 import Footer from "./components/footer";
+import SearchBar from "./components/searchBar";
+
+const sampleContent = [
+  { title: "Open Source Contribution", category: "Feature" },
+  { title: "Hacktoberfest 2025 Guide", category: "Blog" },
+  { title: "Join the Community", category: "Testimonial" },
+  { title: "Pull Requests Made Easy", category: "Feature" },
+];
 
 function App() {
   const [visitorCount, setVisitorCount] = useState(0);
@@ -309,12 +317,19 @@ function App() {
             : "bg-transparent"
         }`}
       >
-        <nav className="container mx-auto px-6 py-4">
+        <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
+            {/* Branding */}
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400">
               Hacktoberfest Site
             </h1>
-            <div className="space-x-6">
+            {/* Compact Search Bar */}
+            <div className="relative w-1/2">
+              <SearchBar data={sampleContent} />
+            </div>
+
+            {/* Navigation Links + Search */}
+            <div className="flex items-center space-x-6">
               <a
                 href="#home"
                 className="font-medium hover:text-pink-400 transition-colors"
