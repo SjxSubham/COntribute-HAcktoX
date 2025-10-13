@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from '@vercel/analytics'
+import { useTheme } from "./context/ThemeContext";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const [visitorCount, setVisitorCount] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const [contributors, setContributors] = useState([])
@@ -20,6 +23,15 @@ function App() {
   const [stargazers, setStargazers] = useState([])
   const [stargazersLoading, setStargazersLoading] = useState(true)
   const [stargazersError, setStargazersError] = useState(null)
+  
+  // Set dark mode class on root element
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -288,7 +300,10 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 text-white">
+    <div className={`min-h-screen ${theme === "dark"
+      ? "bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 text-gray-100"
+      : "bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 text-white"
+  }`} >
       {/* Header/Navigation Section */}
       <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}>
         <nav className="container mx-auto px-6 py-4">
@@ -298,6 +313,18 @@ function App() {
               <a href="#home" className="font-medium hover:text-pink-400 transition-colors">Home</a>
               <a href="#about" className="font-medium hover:text-pink-400 transition-colors">About</a>
               <a href="#features" className="font-medium hover:text-pink-400 transition-colors">Features</a>
+               {/* Dark Mode Toggle */}
+                <button
+    onClick={() => toggleTheme()}
+    className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all"
+    aria-label="Toggle Dark Mode"
+  >
+    {theme === "light" ? (
+      <MoonIcon className="h-6 w-6 text-yellow-400" />
+    ) : (
+      <SunIcon className="h-6 w-6 text-yellow-400" />
+    )}
+  </button>
             </div>
           </div>
         </nav>
