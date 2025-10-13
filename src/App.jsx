@@ -3,6 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
 import Footer from "./components/footer";
+import ThemeBtn from "./Context/ThemeBtn";
 
 function App() {
   const [visitorCount, setVisitorCount] = useState(0);
@@ -305,16 +306,19 @@ function App() {
       <header
         className={`fixed w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-black/80 backdrop-blur-md shadow-lg"
+            ? "bg-violet-700 dark:bg-black/80 backdrop-blur-md shadow-lg"
             : "bg-transparent"
         }`}
       >
         <nav className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
+            {/* Logo / Brand */}
             <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400">
               Hacktoberfest Site
             </h1>
-            <div className="space-x-6">
+
+            {/* Centered Navigation Links */}
+            <div className="hidden md:flex space-x-8">
               <a
                 href="#home"
                 className="font-medium hover:text-pink-400 transition-colors"
@@ -333,6 +337,11 @@ function App() {
               >
                 Features
               </a>
+            </div>
+
+            {/* Theme Button */}
+            <div className="flex items-center space-x-4">
+              <ThemeBtn />
             </div>
           </div>
         </nav>
@@ -356,7 +365,7 @@ function App() {
               Hacktoberfest 2025
             </h2>
             <p
-              className="text-2xl text-indigo-200 mb-10 max-w-3xl mx-auto"
+              className="text-2xl  mb-10 max-w-3xl mx-auto"
               data-aos="fade-up"
               data-aos-delay="300"
             >
@@ -420,7 +429,7 @@ function App() {
           <h3 className="text-2xl font-bold text-white mb-4 mt-6">
             Site Visitors
           </h3>
-          <p className="text-indigo-200 mb-6">
+          <p className=" mb-6">
             People who have visited our Hacktoberfest site
           </p>
           <div className="relative mb-8">
@@ -441,7 +450,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="bg-white/5 backdrop-blur-md rounded-lg p-4 text-indigo-200 text-sm">
+          <div className="bg-white/5 backdrop-blur-md rounded-lg p-4  text-sm">
             <p>Join our growing community of open source enthusiasts!</p>
             {/* <div className="flex justify-between items-center mt-3">
               <div className="flex -space-x-2">
@@ -473,7 +482,7 @@ function App() {
           Amazing Features
         </h2>
         <p
-          className="text-center text-indigo-200 mb-16 max-w-2xl mx-auto"
+          className="text-center  mb-16 max-w-2xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -510,7 +519,7 @@ function App() {
             >
               Fast Development
             </h3>
-            <p className="text-indigo-200">
+            <p className="">
               Built with Vite for lightning-fast development experience with
               instant hot module replacement
             </p>
@@ -544,7 +553,7 @@ function App() {
             >
               Modern Styling
             </h3>
-            <p className="text-indigo-200">
+            <p className="">
               Styled with Tailwind CSS for beautiful, responsive design that
               adapts to any device or screen size
             </p>
@@ -578,7 +587,7 @@ function App() {
             >
               React Powered
             </h3>
-            <p className="text-indigo-200">
+            <p className="">
               Built with React for interactive user interfaces with reusable
               components and efficient state management
             </p>
@@ -763,7 +772,7 @@ function App() {
                   {member.desc}
                 </p>
               </div>
-              <div className="mt-6 flex justify-center space-x-10 bg-black rounded-full p-3">
+              <div className="mt-6 flex justify-center space-x-10 bg-white dark:bg-black rounded-full p-3">
                 <a
                   href={member.github}
                   target="_blank"
@@ -806,7 +815,7 @@ function App() {
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
             Repository Stats
           </h2>
-          <p className="text-indigo-200 max-w-2xl mx-auto">
+          <p className=" max-w-2xl mx-auto">
             Real-time statistics for our{" "}
             <a
               href="https://github.com/SjxSubham/COntribute-HAcktoX"
@@ -826,7 +835,7 @@ function App() {
         ) : repoStats.error ? (
           <div className="text-center text-pink-400 py-10">
             <p>Couldn't load repository stats: {repoStats.error}</p>
-            <p className="mt-4 text-indigo-200">
+            <p className="mt-4 ">
               Please try refreshing the page.
             </p>
           </div>
@@ -965,7 +974,7 @@ function App() {
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
             Our Contributors
           </h2>
-          <p className="text-indigo-200 max-w-2xl mx-auto">
+          <p className=" max-w-2xl mx-auto">
             Meet the amazing people who have contributed to our{" "}
             <a
               href="https://github.com/SjxSubham/COntribute-HAcktoX"
@@ -995,7 +1004,7 @@ function App() {
               <p className="text-pink-400">
                 Failed to load contributors: {contributorsError}
               </p>
-              <p className="text-indigo-200 mt-4">
+              <p className=" mt-4">
                 GitHub API rate limits may have been reached. You can still view
                 all contributors directly on{" "}
                 <a
@@ -1093,7 +1102,7 @@ function App() {
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
             Our Stargazers
           </h2>
-          <p className="text-indigo-200 max-w-2xl mx-auto">
+          <p className=" max-w-2xl mx-auto">
             People who have starred our{" "}
             <a
               href="https://github.com/SjxSubham/COntribute-HAcktoX/stargazers"
@@ -1122,7 +1131,7 @@ function App() {
               <p className="text-pink-400">
                 Failed to load stargazers: {stargazersError}
               </p>
-              <p className="text-indigo-200 mt-4">
+              <p className=" mt-4">
                 GitHub API rate limits may have been reached. You can still view
                 all stargazers directly on{" "}
                 <a
@@ -1226,7 +1235,7 @@ function App() {
           <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
             Developer Stories
           </h2>
-          <p className="text-indigo-200 max-w-2xl mx-auto">
+          <p className=" max-w-2xl mx-auto">
             Hear from developers who participated in previous Hacktoberfest
             events.
           </p>
@@ -1254,7 +1263,7 @@ function App() {
                 />
               </svg>
             </div>
-            <div className="text-indigo-200 mb-6 italic">
+            <div className=" mb-6 italic">
               "Hacktoberfest was my gateway into open source. I went from being
               intimidated by GitHub to submitting multiple PRs. The community
               was incredibly welcoming and helpful!"
@@ -1293,7 +1302,7 @@ function App() {
                 />
               </svg>
             </div>
-            <div className="text-indigo-200 mb-6 italic">
+            <div className=" mb-6 italic">
               "Participating in Hacktoberfest helped me land my first developer
               job. The skills I gained by contributing to real projects were
               exactly what employers were looking for!"
@@ -1332,7 +1341,7 @@ function App() {
                 />
               </svg>
             </div>
-            <div className="text-indigo-200 mb-6 italic">
+            <div className=" mb-6 italic">
               "As a project maintainer, Hacktoberfest brought in valuable
               contributions we wouldn't have received otherwise. Some
               contributors even became regular team members!"
@@ -1375,7 +1384,7 @@ function App() {
             <h2 className="text-4xl font-bold mb-4 text-white">
               Ready to Start Contributing?
             </h2>
-            <p className="text-indigo-200 mb-8 max-w-2xl mx-auto text-lg">
+            <p className=" mb-8 max-w-2xl mx-auto text-lg">
               Join thousands of developers around the world in supporting open
               source during Hacktoberfest. Your contributions matter!
             </p>
