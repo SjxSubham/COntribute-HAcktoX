@@ -68,7 +68,7 @@ export default function ContactForm() {
       aria-labelledby="contact-heading"
     >
       <h2
-        className="text-4xl text- font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"
+        className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"
         id="contact-heading"
       >
         Contact Us
