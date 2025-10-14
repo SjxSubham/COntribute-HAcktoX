@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
 import Footer from "./components/footer";
 import ThemeBtn from "./Context/ThemeBtn";
+import Navbar from "./components/Navbar"
 
 function App() {
 	const [visitorCount, setVisitorCount] = useState(0);
@@ -306,49 +307,7 @@ function App() {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-900 text-white">
 			{/* Header/Navigation Section */}
-			<header
-				className={`fixed w-full z-50 transition-all duration-300 ${
-					isScrolled
-						? "bg-violet-700 dark:bg-black/80 backdrop-blur-md shadow-lg"
-						: "bg-transparent"
-				}`}
-			>
-				<nav className="container mx-auto px-6 py-4">
-					<div className="flex items-center justify-between">
-						{/* Logo / Brand */}
-						<h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400">
-							Hacktoberfest Site
-						</h1>
-
-						{/* Centered Navigation Links */}
-						<div className="hidden md:flex space-x-8">
-							<a
-								href="#home"
-								className="font-medium hover:text-pink-400 transition-colors"
-							>
-								Home
-							</a>
-							<a
-								href="#about"
-								className="font-medium hover:text-pink-400 transition-colors"
-							>
-								About
-							</a>
-							<a
-								href="#features"
-								className="font-medium hover:text-pink-400 transition-colors"
-							>
-								Features
-							</a>
-						</div>
-
-						{/* Theme Button */}
-						<div className="flex items-center space-x-4">
-							<ThemeBtn />
-						</div>
-					</div>
-				</nav>
-			</header>
+			<Navbar />
 
 			{/* Hero Section */}
 			<section id="home" className="relative pt-32 pb-24 overflow-hidden">
