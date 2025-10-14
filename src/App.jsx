@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
 import Footer from "./components/footer";
 import ThemeBtn from "./Context/ThemeBtn";
+import ContactForm from './components/ContactForm';
 
 function App() {
   const [visitorCount, setVisitorCount] = useState(0);
@@ -1420,8 +1421,8 @@ function App() {
             </div>
           </div>
         </div>
+        <ContactForm />
       </section>
-
       {/* Footer */}
       <Footer />
     </div>
