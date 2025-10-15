@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
 
 @layer base {
   html {
@@ -56,6 +59,11 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
+    }
+
+    /* Also reduce AOS animations when prefers-reduced-motion is enabled */
+    [data-aos] {
+      transition: none !important;
     }
   }
 }
@@ -143,7 +151,8 @@
 
   50% {
     transform: scale(1.2);
-    color: #10b981; /* Green highlight at peak */
+    color: #10b981;
+    /* Green highlight at peak */
     text-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
   }
 
