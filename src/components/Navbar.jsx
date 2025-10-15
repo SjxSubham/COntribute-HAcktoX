@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ThemeBtn from "../Context/ThemeBtn";
-import { CircleX, Menu } from "lucide-react";
+import { CircleX, Menu, PanelRightOpen } from "lucide-react";
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -77,7 +77,7 @@ const Navbar = () => {
                             <div className="md:block hidden">
                                 <ThemeBtn />
                             </div>
-                        { !isOpen && <button className="" onClick={() => setIsOpen(true)}>
+                        { !isOpen && <button className="md:hidden" onClick={() => setIsOpen(true)}>
                                 <Menu />
                             </button>}
                         </div>
@@ -93,7 +93,7 @@ const Navbar = () => {
             >
                 <div className={`backdrop-blur-md flex flex-col items-center gap-6 py-6 md:hidden bg-neutral-900/80 h-full min-h-screen`}>
                     <div className="w-full flex justify-end items-center px-5">
-                        <button onClick={() => setIsOpen(false)}><CircleX /></button>
+                        <button onClick={() => setIsOpen(false)}><PanelRightOpen /></button>
                     </div>
                     <div className="w-full flex flex-col justify-between h-full">
                         <div className="flex flex-col gap-3 w-full px-4">
@@ -102,7 +102,7 @@ const Navbar = () => {
                                 <>
                                     {
                                         navs.map((nav) => (
-                                             <a href={nav.link} className="hover:text-cyan-400 text-2xl hover:bg-black/30 px-5 py-2 rounded-xl">{nav.name}</a>
+                                             <a href={nav.link} key={nav.link} className="hover:text-violet-400 text-2xl font-normal hover:font-bold hover:bg-black/30 px-5 py-2 rounded-xl">{nav.name}</a>
                                         ))
                                     }
                                 </>
