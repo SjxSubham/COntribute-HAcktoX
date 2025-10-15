@@ -21,6 +21,10 @@ const Navbar = () => {
         {
             name: "Features",
             link: "#features"
+        },
+        {
+            name: "Contact",
+            link: "#contact"
         }
     ];
 
@@ -57,24 +61,20 @@ const Navbar = () => {
                         </h1>
 
                         <div className="hidden md:flex space-x-8">
-                            <a
-                                href="#home"
-                                className="font-medium hover:text-pink-400 transition-colors"
-                            >
-                                Home
-                            </a>
-                            <a
-                                href="#about"
-                                className="font-medium hover:text-pink-400 transition-colors"
-                            >
-                                About
-                            </a>
-                            <a
-                                href="#features"
-                                className="font-medium hover:text-pink-400 transition-colors"
-                            >
-                                Features
-                            </a>
+                             {
+                            navs.length > 0 && (
+                                <>
+                                    {
+                                        navs.map((nav) => (
+                                             <a
+                                             href={nav.link}
+                                             key={nav.link}
+                                             className="font-medium hover:text-pink-400 transition-colors">{nav.name}</a>
+                                        ))
+                                    }
+                                </>
+                            )
+                        }
                         </div>
 
                         <div className="flex items-center space-x-4">

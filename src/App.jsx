@@ -1417,7 +1417,7 @@ function App() {
 					</div>
 				</div>
 			</section>
-
+            <ContactForm />
 			{/* Footer */}
 			<Footer />
 		</div>
