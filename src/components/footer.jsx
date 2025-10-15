@@ -248,7 +248,8 @@ const Footer = () => {
               Code of Conduct
             </a>
             <a href="https://feed-x-widget.vercel.app/?projectId=31&projectName=hacktoberfest"
-              target="_blank" rel="noopener noreferrer"
+              target="_blank" 
+              rel="noopener noreferrer"
               className="hover:text-pink-400 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 rounded px-1"
               aria-label="Provide Feedback"
             >

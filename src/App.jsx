@@ -17,7 +17,7 @@ function App() {
 		forks: 0,
 		mergedPRs: 0,
 		loading: true,
-		error: null
+		error: null,
 	})
 	const [stargazers, setStargazers] = useState([])
 	const [stargazersLoading, setStargazersLoading] = useState(true)
