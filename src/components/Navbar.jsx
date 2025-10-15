@@ -24,6 +24,10 @@ const Navbar = () => {
         }
     ];
 
+    const handleNavClick = () => {
+        setIsOpen((prev) => !prev)
+    }
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 10) {
@@ -77,7 +81,14 @@ const Navbar = () => {
                             <div className="md:block hidden">
                                 <ThemeBtn />
                             </div>
-                        { !isOpen && <button className="md:hidden" onClick={() => setIsOpen(true)}>
+                        { !isOpen &&
+                            <button
+                                className="md:hidden"
+                                onClick={handleNavClick}
+                                aria-label="Open navigation menu"
+                                aria-expanded={isOpen}
+                                aria-controls="mobile-menu"
+                            >
                                 <Menu />
                             </button>}
                         </div>
@@ -85,24 +96,40 @@ const Navbar = () => {
                 </nav>
             </header>
 
-
+            {/* Mobile Menu */}
               <nav
                 className={`fixed top-0 right-0 w-4/5 max-w-sm h-full bg-gradient-to-b from-violet-900/95 to-purple-900/95 backdrop-blur-md z-50 md:hidden transition-all duration-500 ease-in-out ${
                     isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
                 }`}
+                id="mobile-menu"
+                role="dialog"
+                aria-modal="true"
+                aria-label="Mobile Navigation Menu"
             >
                 <div className={`backdrop-blur-md flex flex-col items-center gap-6 py-6 md:hidden bg-neutral-900/80 h-full min-h-screen`}>
                     <div className="w-full flex justify-end items-center px-5">
-                        <button onClick={() => setIsOpen(false)}><PanelRightOpen /></button>
+                        <button
+                            aria-label="Close navigation menu"
+                            onClick={handleNavClick}>
+                                <CircleX />
+                        </button>
                     </div>
                     <div className="w-full flex flex-col justify-between h-full">
-                        <div className="flex flex-col gap-3 w-full px-4">
+                        <div
+                            className="flex flex-col gap-3 w-full px-4"
+                            role="menu"
+                            aria-label="Main menu"
+                        >
                         {
                             navs.length > 0 && (
                                 <>
                                     {
                                         navs.map((nav) => (
-                                             <a href={nav.link} key={nav.link} className="hover:text-violet-400 text-2xl font-normal hover:font-bold hover:bg-black/30 px-5 py-2 rounded-xl">{nav.name}</a>
+                                             <a
+                                             href={nav.link}
+                                             key={nav.link}
+                                             role="menuitem"
+                                             className="hover:text-violet-400 text-2xl font-normal hover:font-bold hover:bg-black/30 px-5 py-2 rounded-xl">{nav.name}</a>
                                         ))
                                     }
                                 </>
