@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  const testimonials = [
+  const testimonials = useMemo(() => [
     {
       name: "Sarah Chen",
       role: "Full Stack Developer",
@@ -54,7 +55,7 @@ const Testimonials = () => {
       quote: "This hackathon pushed me out of my comfort zone in the best way possible. I learned new technologies, collaborated with amazing people, and walked away with a project I'm genuinely proud of.",
       rating: 5
     }
-  ];
+  ], []);
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -66,20 +67,32 @@ const Testimonials = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, testimonials.length]);
 
-  const nextTestimonial = () => {
+const pauseAutoplay = () => {
+  if(isAutoPlaying){
     setIsAutoPlaying(false);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
+    setTimeout(() => {
+      setIsAutoPlaying(true); // resume autoplay after 5 seconds
+    }, 5000);
+  } // stop autoplay
+};
 
-  const prevTestimonial = () => {
-    setIsAutoPlaying(false);
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
+// When clicking "Next"
+const nextTestimonial = () => {
+  setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  pauseAutoplay(); // pause autoplay
+};
 
-  const goToTestimonial = (index) => {
-    setIsAutoPlaying(false);
-    setCurrentIndex(index);
-  };
+// When clicking "Previous"
+const prevTestimonial = () => {
+  setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  pauseAutoplay(); // pause autoplay
+};
+
+// When clicking a specific dot
+const goToTestimonial = (index) => {
+  setCurrentIndex(index);
+  pauseAutoplay(); // pause autoplay
+};
 
   return (
     <section
@@ -173,7 +186,7 @@ const Testimonials = () => {
       </div>
 
       {/* Grid View (Mobile-friendly alternative shown below carousel) */}
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto md:hidden">
         {testimonials.map((testimonial, index) => (
           <div
             key={index}
