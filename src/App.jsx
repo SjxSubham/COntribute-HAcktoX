@@ -309,7 +309,7 @@ function App() {
 				<div className="container mx-auto px-6 relative z-10">
 					<div className="text-center">
 						<h2
-							className="text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"
+							className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-center leading-tight"
 							data-aos="fade-down"
 							data-aos-duration="700"
 						>
