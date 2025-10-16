@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
-import { Navbar } from "./components"
+import { Navbar, Partners } from "./components"
 import Footer from "./components/footer";
+import Testimonials from "./components/Testimonials";
 import ThemeBtn from "./Context/ThemeBtn";
 import ContactForm from './components/ContactForm';
 
@@ -334,7 +335,9 @@ function App() {
 
 				<div className="container mx-auto px-6 relative z-10">
 					<div className="text-center">
-						<h1 id="hero-title" className="text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"
+						<h1
+							id="hero-title"
+							className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-center leading-tight"
 							data-aos="fade-down"
 							data-aos-duration="700">
 							Hacktoberfest 2025
@@ -368,9 +371,9 @@ function App() {
 								Learn More
 							</a>
 						</div>
-					</div>
-				</div>
-			</section>
+					</div >
+				</div >
+			</section >
 
 			{/* Main Content */}
 			<main id="main-content" tabIndex="-1" className="focus:outline-none">
@@ -407,9 +410,22 @@ function App() {
 						</div>
 						<div className="bg-white/5 backdrop-blur-md rounded-lg p-4 text-indigo-200 text-sm">
 							<p>Join our growing community of open source enthusiasts!</p>
+							{/* <div className="flex justify-between items-center mt-3">
+              <div className="flex -space-x-2">
+                {/* {[1, 2, 3, 4].map((num) => (
+                  <div key={num} className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-xs font-bold overflow-hidden">
+                    {String.fromCharCode(64 + num)}
+                  </div>
+                ))}
+                <div className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-bold">
+                  +{(visitorCount - 4).toLocaleString()}
+                </div>
+              </div>
+              <span className="text-xs opacity-75">Updated in real-time</span>
+            </div> */}
 						</div>
 					</div>
-				</section>
+				</section >
 
 				{/* Features Section */}
 				<section
@@ -471,7 +487,7 @@ function App() {
 							<p className="text-indigo-200">Built with React for interactive user interfaces with reusable components and efficient state management</p>
 						</article>
 					</div>
-				</section>
+				</section >
 
 				{/* About Section */}
 				<section
@@ -530,7 +546,6 @@ function App() {
 								</a>
 							</div>
 						</div>
-
 						<div className="relative order-1 md:order-2" data-aos="zoom-in-left">
 							<div className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg blur opacity-75" aria-hidden="true"></div>
 							<div className="relative bg-black rounded-lg overflow-hidden border border-white/10">
@@ -544,6 +559,9 @@ function App() {
 						</div>
 					</div>
 				</section>
+
+				{/* <Partners Section */}
+				<Partners />
 
 				{/* Teams Section */}
 				<section
@@ -665,19 +683,17 @@ function App() {
 					aria-labelledby="stats-title"
 					data-aos="fade-up"
 				>
-					<div className="text-center mb-16"
-						data-aos="fade-down">
+					<div className="text-center mb-16" data-aos="fade-down">
 						<h2 id="stats-title" className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
 							Repository Stats
 						</h2>
-						<p className="text-indigo-200 max-w-2xl mx-auto">
-							Real-time statistics for our{' '}
+						<p className="max-w-2xl mx-auto">
+							Real-time statistics for our{" "}
 							<a
 								href="https://github.com/SjxSubham/COntribute-HAcktoX"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="text-pink-400 hover:text-pink-300 underline focus:outline-none focus:ring-2 focus:ring-pink-500 rounded px-1"
-								aria-label="Visit our Hacktoberfest repository on GitHub"
+								className="text-pink-400 hover:text-pink-300 underline"
 							>
 								Hacktoberfest repository
 							</a>
@@ -767,7 +783,7 @@ function App() {
 				</section>
 
 				{/* Repository Contributors Section */}
-				<section
+				< section
 					className="container mx-auto px-6 py-24"
 					aria-labelledby="contributors-title"
 					data-aos="fade-up"
@@ -879,7 +895,7 @@ function App() {
 							</>
 						)}
 					</div>
-				</section>
+				</section >
 
 				{/* Repository Stargazers Section */}
 				<section
@@ -1008,102 +1024,10 @@ function App() {
 				</section>
 
 				{/* Testimonials Section */}
-				<section
-					className="container mx-auto px-6 py-24"
-					aria-labelledby="testimonials-title"
-					data-aos="fade-up"
-				>
-					<div className="text-center mb-16"
-						data-aos="fade-down">
-						<h2 id="testimonials-title" className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
-							Developer Stories
-						</h2>
-						<p className="text-indigo-200 max-w-2xl mx-auto">Hear from developers who participated in previous Hacktoberfest events.</p>
-					</div>
-
-					<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-						<blockquote className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-pink-500/50 transition-all"
-							data-aos="fade-up"
-							data-aos-delay="100">
-							<div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-pink-500/40 transition-all" aria-hidden="true">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-								</svg>
-							</div>
-							<div className="text-indigo-200 mb-6 italic">
-								"Hacktoberfest was my gateway into open source. I went from being intimidated by GitHub to submitting multiple PRs. The community was incredibly welcoming and helpful!"
-							</div>
-							<div className="flex items-center">
-								<div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-600 to-purple-700 flex items-center justify-center text-xl font-bold text-white" aria-hidden="true">
-									AS
-								</div>
-								<div className="ml-4">
-									<div className="text-white font-medium">Alex Sandoval</div>
-									<div className="text-indigo-300 text-sm">Frontend Developer</div>
-								</div>
-							</div>
-						</blockquote>
-
-						<blockquote className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-purple-500/50 transition-all"
-							data-aos="fade-up"
-							data-aos-delay="200">
-							<div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-purple-500/40 transition-all" aria-hidden="true">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-								</svg>
-							</div>
-							<div className="text-indigo-200 mb-6 italic">
-								"Participating in Hacktoberfest helped me land my first developer job. The skills I gained by contributing to real projects were exactly what employers were looking for!"
-							</div>
-							<div className="flex items-center">
-								<div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-indigo-700 flex items-center justify-center text-xl font-bold text-white" aria-hidden="true">
-									MP
-								</div>
-								<div className="ml-4">
-									<div className="text-white font-medium">Maya Patterson</div>
-									<div className="text-indigo-300 text-sm">Full Stack Developer</div>
-								</div>
-							</div>
-						</blockquote>
-
-						<blockquote className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 relative group hover:border-indigo-500/50 transition-all"
-							data-aos="fade-up"
-							data-aos-delay="300">
-							<div className="absolute top-0 right-0 -mt-4 -mr-4 w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/40 transition-all" aria-hidden="true">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-								</svg>
-							</div>
-							<div className="text-indigo-200 mb-6 italic">
-								"As a project maintainer, Hacktoberfest brought in valuable contributions we wouldn't have received otherwise. Some contributors even became regular team members!"
-							</div>
-							<div className="flex items-center">
-								<div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-blue-700 flex items-center justify-center text-xl font-bold text-white" aria-hidden="true">
-									JL
-								</div>
-								<div className="ml-4">
-									<div className="text-white font-medium">Jamie Liu</div>
-									<div className="text-indigo-300 text-sm">Open Source Maintainer</div>
-								</div>
-							</div>
-						</blockquote>
-					</div>
-
-					<div className="flex justify-center mt-10">
-						<a
-							href="https://hacktoberfest.com/community/"
-							target="_blank"
-							rel="noopener noreferrer"
-							className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-purple-500/40 transition-all focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-purple-900"
-							aria-label="Share your Hacktoberfest story"
-						>
-							Share Your Story
-						</a>
-					</div>
-				</section>
+				<Testimonials />
 
 				{/* CTA Section */}
-				<section
+				< section
 					className="container mx-auto px-6 py-16"
 					aria-labelledby="cta-title"
 				>
@@ -1143,15 +1067,15 @@ function App() {
 							</div>
 						</div>
 					</div>
-				</section>
+				</section >
 
 				{/* Contact Form Section */}
-				<ContactForm />
+				< ContactForm />
 
-			</main>
+			</main >
 
 			{/* Footer */}
-			<Footer />
+			< Footer />
 		</div >
 	);
 }
