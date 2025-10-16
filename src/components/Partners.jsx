@@ -44,14 +44,14 @@ const Partners = () => {
 
   return (
     <section
-	    id="teams"
+	    id="partners"
 		className="container mx-auto px-6 py-24 relative">
 
         <h1 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
 					Our Partners
 				</h1>
 
-        <div className={`grid md:grid-cols-4 gap-3 `}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 `}>
                 { ourPartners.map((partner) => (
 						<div
 							key={partner.name}
@@ -82,6 +82,7 @@ const Partners = () => {
                                                 rel="noopener noreferrer"
                                                 className="hover:text-neutral-100 text-neutral-300"
                                                 key={social.name}
+                                                aria-label={`${partner.name} ${social.name}`}
                                             >
                                                  <social.icon className=""/>
                                             </a>
