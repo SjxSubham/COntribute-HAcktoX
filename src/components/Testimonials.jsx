@@ -67,41 +67,42 @@ const Testimonials = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying, testimonials.length]);
 
-const pauseAutoplay = () => {
-  if(isAutoPlaying){
-    setIsAutoPlaying(false);
-    setTimeout(() => {
-      setIsAutoPlaying(true); // resume autoplay after 5 seconds
-    }, 5000);
-  } // stop autoplay
-};
+  const pauseAutoplay = () => {
+    if (isAutoPlaying) {
+      setIsAutoPlaying(false);
+      setTimeout(() => {
+        setIsAutoPlaying(true); // resume autoplay after 5 seconds
+      }, 5000);
+    } // stop autoplay
+  };
 
-// When clicking "Next"
-const nextTestimonial = () => {
-  setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  pauseAutoplay(); // pause autoplay
-};
+  // When clicking "Next"
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    pauseAutoplay(); // pause autoplay
+  };
 
-// When clicking "Previous"
-const prevTestimonial = () => {
-  setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  pauseAutoplay(); // pause autoplay
-};
+  // When clicking "Previous"
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    pauseAutoplay(); // pause autoplay
+  };
 
-// When clicking a specific dot
-const goToTestimonial = (index) => {
-  setCurrentIndex(index);
-  pauseAutoplay(); // pause autoplay
-};
+  // When clicking a specific dot
+  const goToTestimonial = (index) => {
+    setCurrentIndex(index);
+    pauseAutoplay(); // pause autoplay
+  };
 
   return (
     <section
       id="testimonials"
       className="container mx-auto px-6 py-24 relative"
+      aria-labelledby="testimonials-title"
     >
-      <h1 className="text-4xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+      <h2 id="testimonials-title" className="text-4xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
         What People Say
-      </h1>
+      </h2>
       <p className="text-center text-neutral-300 mb-12 max-w-2xl mx-auto">
         Hear from past participants about their hackathon experience
       </p>
@@ -112,19 +113,22 @@ const goToTestimonial = (index) => {
           <div
             className="flex transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            aria-live="polite"
+            aria-atomic="true"
           >
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
                 className="w-full flex-shrink-0 px-4"
+                aria-hidden={index !== currentIndex}
               >
                 <div className="bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-2xl border border-white/20 relative group hover:border-pink-300/50 transition-all duration-300">
-                  <Quote className="absolute top-6 right-6 text-pink-500/20 w-16 h-16" />
+                  <Quote className="absolute top-6 right-6 text-pink-500/20 w-16 h-16" aria-hidden="true" />
 
                   <div className="flex flex-col items-center text-center mb-6">
                     <img
                       src={testimonial.photo}
-                      alt={testimonial.name}
+                      alt={`Portrait of ${testimonial.name}`}
                       className="w-20 h-20 rounded-full mb-4 border-4 border-pink-500/30 transition-transform duration-300 group-hover:scale-110 object-cover"
                     />
                     <h3 className="text-xl font-bold text-sky-300 mb-1">
@@ -133,19 +137,19 @@ const goToTestimonial = (index) => {
                     <p className="text-sm text-neutral-300 mb-2">
                       {testimonial.role} at {testimonial.company}
                     </p>
-                    <div className="flex gap-1">
+                    <div className="flex gap-1" aria-label={`Rated ${testimonial.rating} out of 5 stars`}>
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
                           key={i}
-                          className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                          className="w-4 h-4 fill-yellow-400 text-yellow-400" aria-hidden="true"
                         />
                       ))}
                     </div>
                   </div>
 
-                  <p className="text-neutral-300 leading-relaxed text-lg italic relative z-10">
+                  <blockquote className="text-neutral-300 leading-relaxed text-lg italic relative z-10">
                     "{testimonial.quote}"
-                  </p>
+                  </blockquote>
                 </div>
               </div>
             ))}
@@ -155,31 +159,33 @@ const goToTestimonial = (index) => {
         {/* Navigation Buttons */}
         <button
           onClick={prevTestimonial}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-pink-500/20 hover:bg-pink-500/40 backdrop-blur-md p-3 rounded-full border border-white/20 transition-all duration-300 group"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-pink-500/20 hover:bg-pink-500/40 backdrop-blur-md p-3 rounded-full border border-white/20 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+          <ChevronLeft className="w-6 h-6 text-white group-hover:scale-110 transition-transform" aria-hidden="true" />
         </button>
         <button
           onClick={nextTestimonial}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-pink-500/20 hover:bg-pink-500/40 backdrop-blur-md p-3 rounded-full border border-white/20 transition-all duration-300 group"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-pink-500/20 hover:bg-pink-500/40 backdrop-blur-md p-3 rounded-full border border-white/20 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+          <ChevronRight className="w-6 h-6 text-white group-hover:scale-110 transition-transform" aria-hidden="true" />
         </button>
 
         {/* Dots Navigation */}
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Testimonial navigation">
           {testimonials.map((_, index) => (
             <button
               key={index}
               onClick={() => goToTestimonial(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex
+              className={`transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-white 
+                ${index === currentIndex
                   ? "w-8 h-3 bg-pink-500"
                   : "w-3 h-3 bg-white/30 hover:bg-white/50"
-              }`}
-              aria-label={`Go to testimonial ${index + 1}`}
+                }`}
+              role="tab"
+              aria-selected={index === currentIndex}
+              aria-label={`Show testimonial ${index + 1}`}
             />
           ))}
         </div>
@@ -191,11 +197,12 @@ const goToTestimonial = (index) => {
           <div
             key={index}
             className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 group hover:border-pink-300/50 hover:-translate-y-2 transition-all duration-300"
+            role="article"
           >
             <div className="flex items-center gap-3 mb-4">
               <img
                 src={testimonial.photo}
-                alt={testimonial.name}
+                alt={`Portrait of ${testimonial.name}`}
                 className="w-12 h-12 rounded-full border-2 border-pink-500/30 transition-transform duration-300 group-hover:scale-110 object-cover"
               />
               <div className="flex-1 min-w-0">
@@ -207,17 +214,18 @@ const goToTestimonial = (index) => {
                 </p>
               </div>
             </div>
-            <div className="flex gap-1 mb-3">
+            <div className="flex gap-1 mb-3" aria-label={`Rated ${testimonial.rating} out of 5 stars`}>
               {[...Array(testimonial.rating)].map((_, i) => (
                 <Star
                   key={i}
                   className="w-3 h-3 fill-yellow-400 text-yellow-400"
+                  aria-hidden="true"
                 />
               ))}
             </div>
-            <p className="text-sm text-neutral-300 leading-relaxed line-clamp-4">
+            <blockquote className="text-sm text-neutral-300 leading-relaxed line-clamp-4">
               "{testimonial.quote}"
-            </p>
+            </blockquote>
           </div>
         ))}
       </div>
