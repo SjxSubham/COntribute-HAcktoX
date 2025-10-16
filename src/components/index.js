@@ -1,5 +1,7 @@
 import Navbar from "./Navbar";
+import Partners from "./Partners";
 
 export {
-    Navbar
+    Navbar,
+    Partners
 }
