@@ -3,6 +3,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
 import {Navbar} from "./components"
+import {FAQ} from "./components"
 import Footer from "./components/footer";
 import ThemeBtn from "./Context/ThemeBtn";
 import ContactForm from './components/ContactForm';
@@ -1417,6 +1418,7 @@ function App() {
 					</div>
 				</div>
 			</section>
+            <FAQ />
             <ContactForm />
 			{/* Footer */}
 			<Footer />
