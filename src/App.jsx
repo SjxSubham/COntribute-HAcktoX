@@ -2,22 +2,23 @@ import { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { track } from "@vercel/analytics";
+import { Navbar } from "./components"
 import Footer from "./components/footer";
 import ThemeBtn from "./Context/ThemeBtn";
+import ContactForm from './components/ContactForm';
 
 function App() {
-	const [visitorCount, setVisitorCount] = useState(0)
-	const [isScrolled, setIsScrolled] = useState(false)
-	const [contributors, setContributors] = useState([])
-	const [contributorsLoading, setContributorsLoading] = useState(true)
-	const [contributorsError, setContributorsError] = useState(null)
+	const [visitorCount, setVisitorCount] = useState(0);
+	const [contributors, setContributors] = useState([]);
+	const [contributorsLoading, setContributorsLoading] = useState(true);
+	const [contributorsError, setContributorsError] = useState(null);
 	// Additional repo stats
 	const [repoStats, setRepoStats] = useState({
 		stars: 0,
 		forks: 0,
 		mergedPRs: 0,
 		loading: true,
-		error: null
+		error: null,
 	})
 	const [stargazers, setStargazers] = useState([])
 	const [stargazersLoading, setStargazersLoading] = useState(true)
@@ -30,19 +31,6 @@ function App() {
 		if (!main) return;
 		main.focus({ preventScroll: false });
 	};
-
-	useEffect(() => {
-		const handleScroll = () => {
-			if (window.scrollY > 10) {
-				setIsScrolled(true)
-			} else {
-				setIsScrolled(false)
-			}
-		}
-
-		window.addEventListener('scroll', handleScroll)
-		return () => window.removeEventListener('scroll', handleScroll)
-	}, [])
 
 	// Initialize AOS animations
 	useEffect(() => {
@@ -323,58 +311,14 @@ function App() {
 			{/* Skip to main content link for screen readers */}
 			<a
 				href="#main-content"
-				className="sr-only skip-to-content"
+				className="sr-only skip-to-content focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:text-purple-900 focus:px-4 focus:py-2 focus:rounded-lg focus:font-bold"
 				onClick={handleSkipToContent}
 			>
 				Skip to main content
 			</a>
 
 			{/* Header/Navigation Section */}
-			<header
-				className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-violet-700 dark:bg-black/80 backdrop-blur-md shadow-lg' : 'bg-transparent'}`}
-				role="banner"
-			>
-				<nav className="container mx-auto px-6 py-4" aria-label="Main navigation">
-					<div className="flex items-center justify-between">
-						{/* Logo / Brand */}
-						<div aria-label="Hacktoberfest site" role="region">
-							<span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400" aria-hidden="true">
-								Hacktoberfest Site
-							</span>
-						</div>
-
-						{/* Centered Navigation Links */}
-						<div className="hidden md:flex space-x-8" role="navigation" aria-label="Primary">
-							<a
-								href="#home"
-								className="font-medium hover:text-pink-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2 focus-visible:ring-offset-purple-900 rounded px-2 py-1"
-								aria-label="Navigate to Home section"
-							>
-								Home
-							</a>
-							<a
-								href="#about"
-								className="font-medium hover:text-pink-400 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-purple-900 rounded px-2 py-1"
-								aria-label="Navigate to About section"
-							>
-								About
-							</a>
-							<a
-								href="#features"
-								className="font-medium hover:text-pink-400 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-purple-900 rounded px-2 py-1"
-								aria-label="Navigate to Features section"
-							>
-								Features
-							</a>
-						</div>
-
-						{/* Theme Button */}
-						<div className="flex items-center space-x-4">
-							<ThemeBtn />
-						</div>
-					</div>
-				</nav>
-			</header>
+			<Navbar />
 
 			{/* Hero Section */}
 			<section
@@ -429,7 +373,7 @@ function App() {
 			</section>
 
 			{/* Main Content */}
-			<main id="main-content" tabIndex="-1">
+			<main id="main-content" tabIndex="-1" className="focus:outline-none">
 				{/* Visitor Counter Section */}
 				<section
 					className="container mx-auto px-6 py-24"
@@ -438,7 +382,7 @@ function App() {
 					<div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-10 max-w-md mx-auto text-center shadow-xl hover:shadow-pink-500/20 transition-all duration-300"
 						data-aos="fade-up">
 						<div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
-							<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" focusable="false">
+							<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
 								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
 							</svg>
 						</div>
@@ -448,7 +392,7 @@ function App() {
 							<div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-xl blur-md" aria-hidden="true"></div>
 							<div className="relative bg-black/30 border border-white/10 rounded-xl py-8 px-4">
 								<div className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-orange-400 flex justify-center items-baseline">
-									<span id="visitor-counter" role="status" aria-live="polite" aria-atomic="true" aria-label={`${visitorCount.toLocaleString()} visitors`}>
+									<span id="visitor-counter" role="status" aria-live="assertive" aria-atomic="true" aria-label={`${visitorCount.toLocaleString()} visitors`}>
 										{visitorCount.toLocaleString()}
 									</span>
 									<span className="sr-only">visitors</span>
@@ -742,10 +686,10 @@ function App() {
 
 					{repoStats.loading ? (
 						<div className="flex justify-center items-center py-10">
-							<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-hidden="true"></div>
+							<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading content" role="status"></div>
 						</div>
 					) : repoStats.error ? (
-						<div className="text-center text-pink-400 py-10">
+							<div className="text-center text-pink-400 py-10" role="alert" aria-live="assertive">
 							<p>Couldn't load repository stats: {repoStats.error}</p>
 							<p className="mt-4 text-indigo-200">Please try refreshing the page.</p>
 						</div>
@@ -851,10 +795,10 @@ function App() {
 						data-aos-delay="300">
 						{contributorsLoading ? (
 							<div className="flex justify-center items-center py-10">
-								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-hidden="true"></div>
+								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading contributors" role="status"></div>
 							</div>
 						) : contributorsError ? (
-							<div className="py-10">
+								<div className="py-10" role="alert" aria-live="assertive">
 								<div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
 									Join Now!
 								</div>
@@ -966,10 +910,10 @@ function App() {
 						data-aos="zoom-in-up">
 						{stargazersLoading ? (
 							<div className="flex justify-center items-center py-10">
-								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-hidden="true"></div>
+								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading stargazers" role="status"></div>
 							</div>
 						) : stargazersError ? (
-							<div className="py-10">
+								<div className="py-10" role="alert" aria-live="assertive">
 								<div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
 									Be First!
 								</div>
@@ -1200,11 +1144,15 @@ function App() {
 						</div>
 					</div>
 				</section>
+
+				{/* Contact Form Section */}
+				<ContactForm />
+
 			</main>
 
 			{/* Footer */}
 			<Footer />
-		</div>
+		</div >
 	);
 }
 
