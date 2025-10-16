@@ -689,7 +689,7 @@ function App() {
 							<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading content" role="status"></div>
 						</div>
 					) : repoStats.error ? (
-							<div className="text-center text-pink-400 py-10" role="alert" aria-live="assertive">
+						<div className="text-center text-pink-400 py-10" role="alert" aria-live="assertive">
 							<p>Couldn't load repository stats: {repoStats.error}</p>
 							<p className="mt-4 text-indigo-200">Please try refreshing the page.</p>
 						</div>
@@ -798,7 +798,7 @@ function App() {
 								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading contributors" role="status"></div>
 							</div>
 						) : contributorsError ? (
-								<div className="py-10" role="alert" aria-live="assertive">
+							<div className="py-10" role="alert" aria-live="assertive">
 								<div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
 									Join Now!
 								</div>
@@ -913,7 +913,7 @@ function App() {
 								<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-pink-500" aria-label="Loading stargazers" role="status"></div>
 							</div>
 						) : stargazersError ? (
-								<div className="py-10" role="alert" aria-live="assertive">
+							<div className="py-10" role="alert" aria-live="assertive">
 								<div className="mb-6 text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
 									Be First!
 								</div>
