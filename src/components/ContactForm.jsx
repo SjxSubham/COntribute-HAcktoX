@@ -39,16 +39,16 @@ export default function ContactForm() {
     setServerError("");
 
     try {
-      emailjs.send('service_qf8icws','template_741klwq',
+      emailjs.send('service_qf8icws', 'template_741klwq',
         {
-        from_name:form.name,
-        to_name:'Pranav',
-        from_email:form.email,
-        to_email:'it10800222003@gmail.com',
-        message:form.message,
-      },
-      'wWASL3-GY6b8mi-US'
-    )
+          from_name: form.name,
+          to_name: 'Pranav',
+          from_email: form.email,
+          to_email: 'it10800222003@gmail.com',
+          message: form.message,
+        },
+        'wWASL3-GY6b8mi-US'
+      )
       // result.status should be 200 on success
       setSubmitted(true);
       setForm({ name: "", email: "", message: "" });
@@ -93,7 +93,7 @@ export default function ContactForm() {
             aria-describedby="name-error"
           />
           {errors.name && (
-            <span className="text-red-400 text-xs mt-1 block" id="name-error">
+            <span className="text-red-400 text-xs mt-1 block" id="name-error" role="alert">
               {errors.name}
             </span>
           )}
@@ -113,7 +113,7 @@ export default function ContactForm() {
             aria-describedby="email-error"
           />
           {errors.email && (
-            <span className="text-red-400 text-xs mt-1 block" id="email-error">
+            <span className="text-red-400 text-xs mt-1 block" id="email-error" role="alert">
               {errors.email}
             </span>
           )}
@@ -133,25 +133,24 @@ export default function ContactForm() {
             aria-describedby="message-error"
           />
           {errors.message && (
-            <span className="text-red-400 text-xs mt-1 block" id="message-error">
+            <span className="text-red-400 text-xs mt-1 block" id="message-error" role="alert">
               {errors.message}
             </span>
           )}
         </div>
         {serverError && (
-          <div className="text-red-400 text-sm mb-4">{serverError}</div>
+          <div className="text-red-400 text-sm mb-4" role="alert" aria-live="assertive">{serverError}</div>
         )}
         {submitted ? (
-          <div className="text-green-400 text-lg font-semibold" role="alert">
+          <div className="text-green-400 text-lg font-semibold" role="alert" aria-live="assertive" aria-atomic="true">
             Thank you for contacting us — we'll reply soon!
           </div>
         ) : (
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 shadow-lg transition-all hover:shadow-pink-500/50 ${
-              isSubmitting ? "opacity-60 cursor-not-allowed" : ""
-            }`}
+            className={`w-full py-3 rounded-xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 shadow-lg transition-all hover:shadow-pink-500/50 ${isSubmitting ? "opacity-60 cursor-not-allowed" : ""
+              }`}
           >
             {isSubmitting ? (
               <span className="flex items-center justify-center gap-2">
@@ -160,6 +159,8 @@ export default function ContactForm() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
+                  aria-label="Sending message"
+                  role="status"
                 >
                   <circle
                     className="opacity-25"
