@@ -10,14 +10,14 @@ const plans = [
   },
   {
     title: "Pro",
-    price: "$9/month",
+    price: "₹9/month",
     features: ["Unlimited Repositories", "Advanced Stats", "Priority Support"],
     gradient: "from-purple-500 to-indigo-500",
     delay: "200",
   },
   {
     title: "Team",
-    price: "$29/month",
+    price: "₹29/month",
     features: [
       "Team Collaboration",
       "Real-time Analytics",
