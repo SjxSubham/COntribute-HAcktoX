@@ -86,6 +86,7 @@ export default function ContactForm() {
             name="name"
             id="name"
             type="text"
+            placeholder="Enter your full name e.g. John Doe"
             className={`w-full p-3 rounded-lg border-violet-600 bg-violet-800 border ${errors.name ? "border-red-500" : "border-gray-200"} focus:outline-none focus:border-pink-500`}
             value={form.name}
             onChange={handleChange}
@@ -106,6 +107,7 @@ export default function ContactForm() {
             name="email"
             id="email"
             type="email"
+            placeholder="We’ll get back to you at this email"
             className={`w-full p-3 rounded-lg border-violet-600 bg-violet-800 border ${errors.email ? "border-red-500" : "border-gray-200"} focus:outline-none focus:border-pink-500`}
             value={form.email}
             onChange={handleChange}
@@ -125,6 +127,7 @@ export default function ContactForm() {
           <textarea
             name="message"
             id="message"
+            placeholder="Type your message here..."
             className={`w-full p-3 rounded-lg border-violet-600 bg-violet-800 border ${errors.message ? "border-red-500" : "border-gray-200"} focus:outline-none focus:border-pink-500 resize-none`}
             value={form.message}
             onChange={handleChange}
