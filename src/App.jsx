@@ -9,8 +9,52 @@ import ThemeBtn from "./Context/ThemeBtn";
 import ContactForm from "./components/ContactForm";
 import PricingCards from "./components/PricingSection";
 
+// 1. Feature Data Array (Content Management) - Retained from original 'main' as static data
+// This array holds all the content for the feature cards.
+const featuresData = [
+  {
+    title: "Fast Development",
+    description: "Built with Vite for lightning-fast development experience",
+  },
+  {
+    title: "Modern Styling",
+    description: "Styled with Tailwind CSS for beautiful, responsive design",
+  },
+  {
+    title: "React Powered",
+    description: "Built with React for interactive user interfaces",
+  },
+  {
+    title: "Open Source",
+    description:
+      "Full access to the codebase. Review, learn, and contribute on GitHub.",
+  },
+  {
+    title: "Community Driven",
+    description:
+      "A project actively developed and maintained by the community.",
+  },
+  {
+    title: "Well Documented",
+    description:
+      "Includes clear guides to help you get started contributing quickly.",
+  },
+];
+
+// 2. Reusable FeatureCard Component - Retained from original 'main' as it's a structural component
+// This component encapsulates the repeated card markup.
+const FeatureCard = ({ title, description }) => (
+  // NOTE: Styling here is simpler than the new "Features Section" but can be used for other feature lists
+  <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+    <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
+    <p className="text-gray-600">{description}</p>
+  </div>
+);
+
 function App() {
-  const [visitorCount, setVisitorCount] = useState(0);
+  // Merged state from both versions: 'count' (simple demo) and all complex states (visitorCount, contributors, etc.)
+  const [count, setCount] = useState(0); // From simple 'main'
+  const [visitorCount, setVisitorCount] = useState(0); // From complex incoming
   const [contributors, setContributors] = useState([]);
   const [contributorsLoading, setContributorsLoading] = useState(true);
   const [contributorsError, setContributorsError] = useState(null);
@@ -26,7 +70,7 @@ function App() {
   const [stargazersLoading, setStargazersLoading] = useState(true);
   const [stargazersError, setStargazersError] = useState(null);
 
-  // Skip-to-content: focus main content programmatically
+  // Skip-to-content: focus main content programmatically - Retained from complex incoming
   const handleSkipToContent = (e) => {
     e.preventDefault();
     const main = document.getElementById("main-content");
@@ -34,7 +78,7 @@ function App() {
     main.focus({ preventScroll: false });
   };
 
-  // Initialize AOS animations
+  // Initialize AOS animations - Retained from complex incoming
   useEffect(() => {
     AOS.init({
       duration: 1600,
@@ -43,7 +87,7 @@ function App() {
     });
   }, []);
 
-  // Add focus-visible class for older browsers
+  // Add focus-visible class for older browsers - Retained from complex incoming
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Tab") {
@@ -64,7 +108,7 @@ function App() {
     };
   }, []);
 
-  // Track visitor count with improved animation - using Vercel Analytics in production
+  // Track visitor count with improved animation - Retained from complex incoming
   useEffect(() => {
     // Set initial base count (for a more impressive starting number)
     const baseCount = 1520;
@@ -186,7 +230,7 @@ function App() {
     };
   }, []);
 
-  // Helper function to fetch data with caching to avoid rate limits
+  // Helper function to fetch data with caching to avoid rate limits - Retained from complex incoming
   const fetchWithCache = async (
     url,
     cacheKey,
@@ -330,10 +374,10 @@ function App() {
         Skip to main content
       </a>
 
-      {/* Header/Navigation Section */}
+      {/* Header/Navigation Section - Use the imported Navbar component */}
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Hero Section - Use the complex, styled version */}
       <section
         id="home"
         className="relative pt-32 pb-24 overflow-hidden"
@@ -405,7 +449,7 @@ function App() {
 
       {/* Main Content */}
       <main id="main-content" tabIndex="-1" className="focus:outline-none">
-        {/* Visitor Counter Section */}
+        {/* Visitor Counter Section - Uses complex incoming logic */}
         <section
           className="container mx-auto px-6 py-24"
           aria-labelledby="visitor-counter-title"
@@ -482,24 +526,29 @@ function App() {
             </div>
             <div className="bg-white/5 backdrop-blur-md rounded-lg p-4 text-indigo-200 text-sm">
               <p>Join our growing community of open source enthusiasts!</p>
-              {/* <div className="flex justify-between items-center mt-3">
-              <div className="flex -space-x-2">
-                {/* {[1, 2, 3, 4].map((num) => (
-                  <div key={num} className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-xs font-bold overflow-hidden">
-                    {String.fromCharCode(64 + num)}
-                  </div>
-                ))}
-                <div className="w-8 h-8 rounded-full border-2 border-indigo-900 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xs font-bold">
-                  +{(visitorCount - 4).toLocaleString()}
-                </div>
-              </div>
-              <span className="text-xs opacity-75">Updated in real-time</span>
-            </div> */}
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* Simple Counter Demo Section - Merged from simple 'main' to keep it as a simple demo/test */}
+        <section className="container mx-auto px-6 py-12">
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 max-w-md mx-auto text-center shadow-xl hover:shadow-blue-500/20 transition-all duration-300">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Interactive Counter
+            </h3>
+            <p className="text-indigo-200 mb-4">
+              Click the button to increment the counter (Simple React state demo)
+            </p>
+            <button
+              onClick={() => setCount((count) => count + 1)}
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-semibold"
+            >
+              Count is: {count}
+            </button>
+          </div>
+        </section>
+
+        {/* Features Section - Merged content from complex incoming but re-inserted the FeatureCard and featuresData for reusability */}
         <section
           id="features"
           className="container mx-auto px-6 py-24"
@@ -518,11 +567,12 @@ function App() {
             data-aos="fade-up"
             data-aos-delay="200"
           >
-            Our platform is built with cutting-edge technologies to provide you
-            with the best experience possible.
+            Our platform is built with cutting-edge technologies and is open for
+            contributions.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {/* The first 3 cards use the complex incoming styling for visual flair */}
             <article
               className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20 hover:border-pink-500/50 transition-all group hover:transform hover:-translate-y-2 duration-300"
               data-aos="zoom-in"
@@ -628,9 +678,21 @@ function App() {
               </p>
             </article>
           </div>
+          {/* Use remaining items from featuresData with the simple FeatureCard component for fallback/simplicity */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            {featuresData.slice(3).map((feature, index) => (
+              <div key={index} data-aos="zoom-in" data-aos-delay={500 + index * 100}>
+                <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 text-white hover:border-blue-500/50 transition-all group hover:transform hover:-translate-y-1 duration-300">
+                  <h3 className="text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-300 to-cyan-300 mb-2">{feature.title}</h3>
+                  <p className="text-indigo-200">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* About Section */}
+
+        {/* About Section - Use the complex, styled version */}
         <section
           id="about"
           className="container mx-auto px-6 py-24 relative"
@@ -879,7 +941,7 @@ function App() {
           </div>
         </section>
 
-        {/* Stats Section */}
+        {/* Stats Section - Use the complex, data-fetching version */}
         <section
           className="container mx-auto px-6 py-24"
           aria-labelledby="stats-title"
@@ -1451,7 +1513,7 @@ function App() {
         <ContactForm />
       </main>
 
-      {/* Footer */}
+      {/* Footer - Use the imported Footer component */}
       <Footer />
     </div>
   );
