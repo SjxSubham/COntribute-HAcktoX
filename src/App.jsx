@@ -1383,6 +1383,75 @@ function App() {
           </div>
         </section>
 
+
+ {/* Pricing Section */}
+      <section id="pricing" className="container mx-auto px-6 py-16">
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+        Pricing Plans
+      </h2>
+      {/* GRID CONTAINER */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Basic Plan */}
+        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+          <h3 className="text-2xl font-bold mb-2">Basic</h3>
+          <p className="text-gray-600 mb-4">Perfect for getting started</p>
+          <div className="text-4xl font-bold text-indigo-600 mb-4">$0</div>
+          <ul className="text-gray-600 mb-6 space-y-2">
+            <li>
+              <span aria-hidden="true">✔</span>
+              <span className="sr-only">Available:</span> 1 Project
+            </li>
+            <li>
+              <span aria-hidden="true">✔</span>
+              <span className="sr-only">Available:</span> Community Support
+            </li>
+            <li>
+              <span aria-hidden="true">✖</span>
+              <span className="sr-only">Not available:</span> No Custom Domain
+            </li>
+          </ul>
+          <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
+            Get Started
+          </button>
+        </div>
+        {/* Pro Plan */}
+        <div className="bg-indigo-50 border-2 border-indigo-600 rounded-xl shadow-lg p-8 text-center">
+          <div
+            className="inline-block bg-indigo-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2"
+            aria-label="Most Popular plan badge"
+            role="status"
+          >
+            Most Popular
+          </div>
+          <h3 className="text-2xl font-bold mb-2 text-indigo-600">Pro</h3>
+          <p className="text-gray-600 mb-4">Best value for individuals</p>
+          <div className="text-4xl font-bold text-indigo-600 mb-4">$9/mo</div>
+          <ul className="text-gray-600 mb-6 space-y-2">
+            <li>✔ Up to 5 Projects</li>
+            <li>✔ Priority Support</li>
+            <li>✔ Custom Domain</li>
+          </ul>
+          <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
+            Choose Plan
+          </button>
+        </div>
+        {/* Enterprise Plan */}
+        <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+          <h3 className="text-2xl font-bold mb-2">Enterprise</h3>
+          <p className="text-gray-600 mb-4">For organizations & teams</p>
+          <div className="text-4xl font-bold text-indigo-600 mb-4">$29/mo</div>
+          <ul className="text-gray-600 mb-6 space-y-2">
+            <li>✔ Unlimited Projects</li>
+            <li>✔ Dedicated Support</li>
+            <li>✔ Advanced Analytics</li>
+          </ul>
+          <button className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700">
+            Contact Sales
+          </button>
+        </div>
+      </div>
+    </section>
+
         {/* Testimonials Section */}
         <Testimonials />
 
@@ -1451,10 +1520,11 @@ function App() {
         <ContactForm />
       </main>
 
+
       {/* Footer */}
       <Footer />
     </div>
   );
 }
 
-export default App;
+export default App
